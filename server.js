@@ -3,11 +3,12 @@ const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { getAllSubmissions, addSubmission, USE_DB } = require('./lib/store');
+const { getAllSubmissions, addSubmission, updateSubmission, USE_DB } = require('./lib/store');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'tabletop2026';
+const LEAD_STATUSES = ['New Lead', 'Contacted', 'Proposal Sent', 'Won', 'Lost'];
 
 // In-memory session tokens for the admin page (reset on restart — fine for a single-user local tool)
 const sessions = new Set();
@@ -64,6 +65,7 @@ app.post('/api/contact', async (req, res) => {
     restaurant: (restaurant || '').trim().slice(0, 200),
     phone: (phone || '').trim().slice(0, 50),
     message: message.trim().slice(0, 2000),
+    status: 'New Lead',
     submittedAt: new Date().toISOString(),
   };
 
@@ -102,6 +104,52 @@ app.post('/admin/logout', (req, res) => {
   res.redirect('/admin');
 });
 
+// --- Manually add a lead ---
+app.post('/admin/leads', async (req, res) => {
+  if (!isAuthed(req)) return res.redirect('/admin');
+
+  const { restaurant, name, email, phone, notes } = req.body;
+  if (!restaurant || !restaurant.trim() || !name || !name.trim()) {
+    return res.redirect('/admin');
+  }
+
+  const entry = {
+    id: crypto.randomUUID(),
+    name: name.trim().slice(0, 200),
+    email: (email || '').trim().slice(0, 200),
+    restaurant: restaurant.trim().slice(0, 200),
+    phone: (phone || '').trim().slice(0, 50),
+    message: (notes || '').trim().slice(0, 2000),
+    status: 'New Lead',
+    submittedAt: new Date().toISOString(),
+  };
+
+  try {
+    await addSubmission(entry);
+  } catch (err) {
+    console.error('Failed to add lead:', err);
+  }
+  res.redirect('/admin');
+});
+
+// --- Update a lead's status/notes ---
+app.post('/admin/leads/:id', async (req, res) => {
+  if (!isAuthed(req)) return res.status(401).json({ ok: false, error: 'Not authenticated' });
+
+  const { status, notes } = req.body;
+  if (!LEAD_STATUSES.includes(status)) {
+    return res.status(400).json({ ok: false, error: 'Invalid status' });
+  }
+
+  try {
+    await updateSubmission(req.params.id, { status, message: String(notes || '').slice(0, 2000) });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Failed to update lead:', err);
+    res.status(500).json({ ok: false, error: 'Failed to save changes' });
+  }
+});
+
 // --- Admin page (login form or submissions table) ---
 app.get('/admin', async (req, res) => {
   if (!isAuthed(req)) {
@@ -133,21 +181,28 @@ app.get('/admin', async (req, res) => {
   }
 
   const submissions = await getAllSubmissions();
-  const rows = submissions.map((s) => `
-    <tr>
+  const rows = submissions.map((s) => {
+    const statusOptions = LEAD_STATUSES.map((opt) =>
+      `<option value="${opt}"${opt === s.status ? ' selected' : ''}>${opt}</option>`
+    ).join('');
+    return `
+    <tr id="row-${s.id}" data-status="${escapeHtml(s.status)}">
       <td>${escapeHtml(new Date(s.submittedAt).toLocaleString())}</td>
+      <td>${escapeHtml(s.restaurant)}</td>
       <td>${escapeHtml(s.name)}</td>
       <td>${escapeHtml(s.email)}</td>
       <td>${escapeHtml(s.phone)}</td>
-      <td>${escapeHtml(s.restaurant)}</td>
-      <td>${escapeHtml(s.message)}</td>
-    </tr>`).join('');
+      <td><select class="status-select" onchange="this.closest('tr').dataset.status=this.value">${statusOptions}</select></td>
+      <td><textarea class="notes-input" rows="2">${escapeHtml(s.message)}</textarea></td>
+      <td><button type="button" class="btn btn-small btn-primary" onclick="saveLead('${s.id}', this)">Save</button></td>
+    </tr>`;
+  }).join('');
 
   res.send(`<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Submissions: Tabletop Marketing</title>
+<title>Lead Tracker: Tabletop Marketing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/styles.css">
@@ -155,19 +210,70 @@ app.get('/admin', async (req, res) => {
 <body class="admin-body">
   <main class="admin-dashboard">
     <div class="admin-header">
-      <h1>${LOGO_MARK}Contact Form Submissions <span class="count">(${submissions.length})</span></h1>
+      <h1>${LOGO_MARK}Lead Tracker <span class="count">(${submissions.length})</span></h1>
       <form method="POST" action="/admin/logout"><button type="submit" class="btn btn-outline">Log Out</button></form>
     </div>
-    ${submissions.length === 0 ? '<p>No submissions yet.</p>' : `
+
+    <div class="lead-form-card">
+      <h2>Add a Lead</h2>
+      <form method="POST" action="/admin/leads" class="lead-form">
+        <div class="form-row">
+          <label for="lead-restaurant">Restaurant Name*</label>
+          <input type="text" id="lead-restaurant" name="restaurant" required>
+        </div>
+        <div class="form-row">
+          <label for="lead-name">Contact Name*</label>
+          <input type="text" id="lead-name" name="name" required>
+        </div>
+        <div class="form-row">
+          <label for="lead-email">Email</label>
+          <input type="email" id="lead-email" name="email">
+        </div>
+        <div class="form-row">
+          <label for="lead-phone">Phone</label>
+          <input type="tel" id="lead-phone" name="phone">
+        </div>
+        <div class="form-row form-row-wide">
+          <label for="lead-notes">Notes</label>
+          <textarea id="lead-notes" name="notes" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Lead</button>
+      </form>
+    </div>
+
+    ${submissions.length === 0 ? '<p>No leads yet.</p>' : `
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Restaurant</th><th>Message</th></tr>
+          <tr><th>Date</th><th>Restaurant</th><th>Contact</th><th>Email</th><th>Phone</th><th>Status</th><th>Notes</th><th></th></tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
     </div>`}
   </main>
+  <script>
+    async function saveLead(id, btn) {
+      const row = document.getElementById('row-' + id);
+      const status = row.querySelector('.status-select').value;
+      const notes = row.querySelector('.notes-input').value;
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      try {
+        const res = await fetch('/admin/leads/' + id, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status, notes }),
+        });
+        const data = await res.json();
+        btn.textContent = data.ok ? 'Saved' : 'Error';
+        if (data.ok) row.dataset.status = status;
+      } catch (err) {
+        btn.textContent = 'Error';
+      }
+      setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 1200);
+    }
+  </script>
 </body>
 </html>`);
 });
