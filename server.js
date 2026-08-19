@@ -23,6 +23,22 @@ function escapeHtml(str) {
   }[c]));
 }
 
+const LOGO_MARK = `<svg class="logo-mark" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="18" y="30" width="5" height="65" rx="2.5" fill="currentColor"/>
+  <rect x="26" y="30" width="5" height="65" rx="2.5" fill="currentColor"/>
+  <rect x="34" y="30" width="5" height="65" rx="2.5" fill="currentColor"/>
+  <rect x="42" y="30" width="5" height="65" rx="2.5" fill="currentColor"/>
+  <rect x="28" y="88" width="9" height="80" rx="4" fill="currentColor"/>
+  <path d="M200,90 L200,55 Q200,32 214,30 Q209,55 209,90 Z" fill="currentColor"/>
+  <rect x="200" y="88" width="9" height="80" rx="4" fill="currentColor"/>
+  <circle cx="120" cy="99" r="68" fill="none" stroke="currentColor" stroke-width="9"/>
+  <rect x="95" y="130" width="14" height="30" rx="2" fill="currentColor"/>
+  <rect x="113" y="110" width="14" height="50" rx="2" fill="currentColor"/>
+  <rect x="131" y="85" width="14" height="75" rx="2" fill="currentColor"/>
+  <path d="M88,150 C115,180 150,150 170,100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <polygon points="182,86 158,94 174,112" fill="currentColor"/>
+</svg>`;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -96,13 +112,14 @@ app.get('/admin', async (req, res) => {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Login — Tabletop Marketing</title>
+<title>Admin Login: Tabletop Marketing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="admin-body">
   <main class="admin-login">
-    <h1>Admin Login</h1>
+    <h1>${LOGO_MARK}Admin Login</h1>
     ${errorMsg}
     <form method="POST" action="/admin/login">
       <label for="password">Password</label>
@@ -130,14 +147,15 @@ app.get('/admin', async (req, res) => {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Submissions — Tabletop Marketing</title>
+<title>Submissions: Tabletop Marketing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="admin-body">
   <main class="admin-dashboard">
     <div class="admin-header">
-      <h1>Contact Form Submissions <span class="count">(${submissions.length})</span></h1>
+      <h1>${LOGO_MARK}Contact Form Submissions <span class="count">(${submissions.length})</span></h1>
       <form method="POST" action="/admin/logout"><button type="submit" class="btn btn-outline">Log Out</button></form>
     </div>
     ${submissions.length === 0 ? '<p>No submissions yet.</p>' : `

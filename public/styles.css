@@ -125,6 +125,9 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.3rem;
@@ -132,7 +135,20 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   text-decoration: none;
   white-space: nowrap;
 }
-.logo span { color: var(--terracotta); }
+.logo-text span { color: var(--terracotta); }
+
+.logo-mark {
+  width: 36px;
+  height: auto;
+  color: var(--terracotta);
+  flex-shrink: 0;
+}
+.logo-mark-footer {
+  width: 26px;
+  color: var(--gold);
+  vertical-align: middle;
+  margin-right: 8px;
+}
 
 .nav-links {
   display: flex;
@@ -158,6 +174,12 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 }
 
 .hero-inner { max-width: 780px; text-align: center; margin: 0 auto; }
+
+.logo-mark-hero {
+  width: 92px;
+  margin: 0 auto 24px;
+  display: block;
+}
 
 .hero-intro {
   font-size: 1.15rem;
@@ -231,6 +253,82 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 }
 
 .step p { margin-bottom: 0; }
+
+/* ---------- Case Study ---------- */
+.case-study { padding: 96px 0; }
+
+.case-study-card {
+  max-width: 880px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow);
+}
+
+.case-study-badge {
+  display: inline-block;
+  background: var(--brown-900);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.case-study-header h3 { margin-bottom: 6px; }
+.case-study-meta { color: var(--brown-500); font-size: 0.95rem; margin-bottom: 8px; }
+
+.case-study-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin: 24px 0 32px;
+}
+
+.case-study-block h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  color: var(--terracotta);
+}
+.case-study-block p { margin-bottom: 0; }
+.case-study-block ul { margin: 0; padding-left: 20px; color: var(--brown-700); }
+.case-study-block li { margin-bottom: 8px; }
+.case-study-block li:last-child { margin-bottom: 0; }
+
+.case-study-result {
+  background: var(--cream-alt);
+  border-left: 4px solid var(--green);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.case-study-result h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  color: var(--green-dark);
+}
+.case-study-illustrative {
+  font-weight: 400;
+  font-size: 0.8rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--brown-500);
+}
+.case-study-result p { margin: 0; }
+
+.case-study-disclaimer {
+  font-size: 0.85rem;
+  color: var(--brown-500);
+  font-style: italic;
+  margin: 0;
+}
 
 /* ---------- Pricing ---------- */
 .pricing { padding: 96px 0; }
@@ -409,6 +507,7 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   font-size: 0.9rem;
 }
 .footer-inner p { margin: 0; color: inherit; }
+.footer-brand { display: flex; align-items: center; }
 .footer-tagline { font-family: var(--font-display); color: var(--gold); }
 
 /* ---------- Admin ---------- */
@@ -431,6 +530,7 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   box-shadow: var(--shadow);
   margin-top: 60px;
 }
+.admin-login h1, .admin-header h1 { display: flex; align-items: center; gap: 10px; }
 .admin-login form { display: flex; flex-direction: column; gap: 14px; }
 .admin-login input {
   padding: 12px 14px;
@@ -475,6 +575,7 @@ tr:last-child td { border-bottom: none; }
   .nav-links { display: none; }
   .benefit-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; gap: 40px; }
+  .case-study-grid { grid-template-columns: 1fr; gap: 24px; }
   .contact-inner { grid-template-columns: 1fr; }
   .contact-copy .section-title,
   .contact-copy .section-subtitle { text-align: center; }
@@ -482,8 +583,14 @@ tr:last-child td { border-bottom: none; }
 }
 
 @media (max-width: 480px) {
+  .header-inner { gap: 12px; }
+  .logo { font-size: 1.05rem; gap: 6px; }
+  .logo-mark { width: 26px; }
+  .logo-mark-hero { width: 56px; }
+  .btn-small { padding: 8px 14px; font-size: 0.85rem; }
   .hero { padding: 64px 0 72px; }
-  .benefits, .how-it-works, .pricing, .faq, .contact { padding: 64px 0; }
+  .benefits, .how-it-works, .case-study, .pricing, .faq, .contact { padding: 64px 0; }
   .pricing-card { padding: 40px 24px; }
+  .case-study-card { padding: 24px; }
   .contact-form { padding: 24px; }
 }
