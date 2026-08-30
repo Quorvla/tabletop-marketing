@@ -190,20 +190,71 @@
   <section id="pricing" class="pricing">
     <div class="container">
       <h2 class="section-title">Simple pricing</h2>
-      <p class="section-subtitle">One package. Everything you need to get found and get seen.</p>
+      <p class="section-subtitle">Two packages. Pick what fits, or tell us what you need.</p>
 
-      <div class="pricing-card">
-        <div class="pricing-badge">Most Popular</div>
-        <h3>Get Found &amp; Get Seen</h3>
-        <p class="price"><span class="price-amount">$249</span></p>
-        <ul class="pricing-features">
-          <li>Full Google Business Profile optimization</li>
-          <li>On-site visit &amp; professional photography</li>
-          <li>Custom social media content package</li>
-          <li>Full before-and-after delivered in 3–5 days</li>
-          <li>No long-term contract</li>
-        </ul>
-        <a href="#contact" class="btn btn-primary btn-large btn-full">Get Started</a>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-badge pricing-badge-alt">Fully Remote</div>
+          <h3>Online Presence Starter</h3>
+          <p class="price"><span class="price-amount">$99</span></p>
+          <ul class="pricing-features">
+            <li>Google Business Profile cleanup: hours, categories, menu link, and business description (we'll create one from scratch if you don't have one yet)</li>
+            <li>Up to 5 photos added (you send them via text, email, or Drive)</li>
+            <li>Professional responses written to up to 5 recent reviews</li>
+            <li>One Google Post published</li>
+            <li>A short follow-up report showing what was fixed and next steps</li>
+          </ul>
+          <div class="pricing-meta">
+            <p><strong>Not included:</strong> taking new photos, ongoing monthly management, social content, ad management.</p>
+            <p><strong>Turnaround:</strong> 2–3 business days.</p>
+            <p><strong>Payment:</strong> $99 paid upfront. Fully remote, no visit needed.</p>
+          </div>
+          <a href="#contact" class="btn btn-primary btn-large btn-full">Get Started</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-badge">Most Popular</div>
+          <h3>Get Found &amp; Get Seen</h3>
+          <p class="price"><span class="price-amount">$249</span></p>
+          <ul class="pricing-features">
+            <li>Full Google Business Profile optimization</li>
+            <li>On-site visit &amp; professional photography</li>
+            <li>Custom social media content package</li>
+            <li>Full before-and-after delivered in 3–5 days</li>
+            <li>No long-term contract</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary btn-large btn-full">Get Started</a>
+        </div>
+      </div>
+
+      <div class="pricing-other">
+        <h3>Need something else?</h3>
+        <p>Every business is different. If neither package above fits what you're looking for, tell us what you need and we'll follow up with a custom plan.</p>
+
+        <form id="custom-request-form" class="contact-form" novalidate>
+          <div class="form-row">
+            <label for="custom-restaurant">Business Name</label>
+            <input type="text" id="custom-restaurant" name="restaurant">
+          </div>
+          <div class="form-row">
+            <label for="custom-name">Contact Name*</label>
+            <input type="text" id="custom-name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="custom-email">Email*</label>
+            <input type="email" id="custom-email" name="email" required>
+          </div>
+          <div class="form-row">
+            <label for="custom-phone">Phone</label>
+            <input type="tel" id="custom-phone" name="phone">
+          </div>
+          <div class="form-row">
+            <label for="custom-message">What do you need help with?*</label>
+            <textarea id="custom-message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-large btn-full">Send Request</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </div>
   </section>
