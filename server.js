@@ -218,7 +218,7 @@ app.get('/admin', async (req, res) => {
       <h2>Add a Lead</h2>
       <form method="POST" action="/admin/leads" class="lead-form">
         <div class="form-row">
-          <label for="lead-restaurant">Restaurant Name*</label>
+          <label for="lead-restaurant">Business Name*</label>
           <input type="text" id="lead-restaurant" name="restaurant" required>
         </div>
         <div class="form-row">
@@ -245,7 +245,7 @@ app.get('/admin', async (req, res) => {
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Date</th><th>Restaurant</th><th>Contact</th><th>Email</th><th>Phone</th><th>Status</th><th>Notes</th><th></th></tr>
+          <tr><th>Date</th><th>Business</th><th>Contact</th><th>Email</th><th>Phone</th><th>Status</th><th>Notes</th><th></th></tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
