@@ -160,7 +160,7 @@ app.get('/admin', async (req, res) => {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Login: Streetline Marketing</title>
+<title>Admin Login: Quorvia Marketing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/styles.css">
@@ -202,7 +202,7 @@ app.get('/admin', async (req, res) => {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Lead Tracker: Streetline Marketing</title>
+<title>Lead Tracker: Quorvia Marketing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="/styles.css">
@@ -279,7 +279,7 @@ app.get('/admin', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Streetline Marketing site running at http://localhost:${PORT}`);
+  console.log(`Quorvia Marketing site running at http://localhost:${PORT}`);
   console.log(`Admin dashboard at http://localhost:${PORT}/admin (password: ${ADMIN_PASSWORD})`);
   console.log(`Submission storage: ${USE_DB ? 'Postgres (DATABASE_URL)' : 'local file (data/submissions.json)'}`);
 });
