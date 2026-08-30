@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200">
-  <g fill="#C1440E">
+  <g fill="#0E3A56">
     <rect x="18" y="30" width="5" height="65" rx="2.5"/>
     <rect x="26" y="30" width="5" height="65" rx="2.5"/>
     <rect x="34" y="30" width="5" height="65" rx="2.5"/>
@@ -7,11 +7,11 @@
     <rect x="28" y="88" width="9" height="80" rx="4"/>
     <path d="M200,90 L200,55 Q200,32 214,30 Q209,55 209,90 Z"/>
     <rect x="200" y="88" width="9" height="80" rx="4"/>
-    <circle cx="120" cy="99" r="68" fill="none" stroke="#C1440E" stroke-width="9"/>
+    <circle cx="120" cy="99" r="68" fill="none" stroke="#0E3A56" stroke-width="9"/>
     <rect x="95" y="130" width="14" height="30" rx="2"/>
     <rect x="113" y="110" width="14" height="50" rx="2"/>
     <rect x="131" y="85" width="14" height="75" rx="2"/>
-    <path d="M88,150 C115,180 150,150 170,100" fill="none" stroke="#C1440E" stroke-width="6" stroke-linecap="round"/>
+    <path d="M88,150 C115,180 150,150 170,100" fill="none" stroke="#0E3A56" stroke-width="6" stroke-linecap="round"/>
     <polygon points="182,86 158,94 174,112"/>
   </g>
 </svg>
