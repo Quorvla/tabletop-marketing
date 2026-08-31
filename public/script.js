@@ -30,7 +30,7 @@ function wireContactForm(form, { messagePrefix } = {}) {
       const result = await res.json();
 
       if (res.ok && result.ok) {
-        statusEl.textContent = "Thanks! We'll be in touch soon.";
+        statusEl.textContent = "Thanks! We'll get back to you within 24–48 business hours.";
         statusEl.classList.add('success');
         form.reset();
       } else {
