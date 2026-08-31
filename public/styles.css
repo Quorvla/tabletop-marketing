@@ -199,6 +199,39 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   flex-wrap: wrap;
 }
 
+.hero-image {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: 48px auto 0;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Trust band ---------- */
+.trust-band { padding: 64px 0; background: var(--cream-alt); }
+
+.trust-band-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.trust-band-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: block;
+}
+
+.trust-band-copy h2 { margin-bottom: 12px; }
+.trust-band-copy p { margin: 0; color: var(--brown-700); }
+
 /* ---------- Benefits ---------- */
 .benefits { padding: 96px 0; }
 
@@ -269,6 +302,15 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   border-radius: var(--radius);
   padding: 40px;
   box-shadow: var(--shadow);
+}
+
+.case-study-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 24px;
 }
 
 .case-study-badge {
@@ -431,6 +473,16 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   margin: 64px auto 0;
   text-align: center;
 }
+.pricing-other-image {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 0 auto 24px;
+}
 .pricing-other h3 { font-size: 1.4rem; margin-bottom: 12px; }
 .pricing-other > p { color: var(--brown-500); margin-bottom: 32px; }
 .pricing-other .contact-form { text-align: left; }
@@ -489,6 +541,17 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 .contact-copy .section-title,
 .contact-copy .section-subtitle { text-align: left; margin: 0 0 16px; }
 .contact-copy .section-subtitle { margin-bottom: 0; }
+
+.contact-image {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-top: 28px;
+}
 
 .contact-form {
   background: var(--card);
@@ -700,11 +763,14 @@ tr[data-status="Lost"] .status-select { color: var(--brown-500); border-color: v
   .benefit-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; gap: 40px; }
   .case-study-grid { grid-template-columns: 1fr; gap: 24px; }
+  .trust-band-inner { grid-template-columns: 1fr; gap: 24px; }
+  .trust-band-copy { text-align: center; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 460px; }
   .lead-form { grid-template-columns: 1fr 1fr; }
   .contact-inner { grid-template-columns: 1fr; }
   .contact-copy .section-title,
   .contact-copy .section-subtitle { text-align: center; }
+  .contact-image { margin-left: auto; margin-right: auto; }
   .footer-inner { justify-content: center; text-align: center; }
 }
 
@@ -715,7 +781,8 @@ tr[data-status="Lost"] .status-select { color: var(--brown-500); border-color: v
   .logo-mark-hero { width: 56px; }
   .btn-small { padding: 8px 14px; font-size: 0.85rem; }
   .hero { padding: 64px 0 72px; }
-  .benefits, .how-it-works, .case-study, .pricing, .faq, .contact { padding: 64px 0; }
+  .benefits, .how-it-works, .trust-band, .case-study, .pricing, .faq, .contact { padding: 64px 0; }
+  .hero-image { margin-top: 32px; border-radius: 14px; }
   .pricing-card { padding: 40px 24px; }
   .case-study-card { padding: 24px; }
   .contact-form { padding: 24px; }
