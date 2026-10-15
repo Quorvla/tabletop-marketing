@@ -3,6 +3,7 @@ const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const { getAllSubmissions, addSubmission, updateSubmission, USE_DB } = require('./lib/store');
 
 const app = express();
@@ -40,6 +41,8 @@ const LOGO_MARK = `<svg class="logo-mark" viewBox="0 0 240 200" xmlns="http://ww
   <polygon points="182,86 158,94 174,112" fill="currentColor"/>
 </svg>`;
 
+app.use(compression());
+app.get('/healthz', (req, res) => res.type('text').send('ok'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -282,4 +285,11 @@ app.listen(PORT, () => {
   console.log(`Quorvia Marketing site running at http://localhost:${PORT}`);
   console.log(`Admin dashboard at http://localhost:${PORT}/admin (password: ${ADMIN_PASSWORD})`);
   console.log(`Submission storage: ${USE_DB ? 'Postgres (DATABASE_URL)' : 'local file (data/submissions.json)'}`);
+
+  // Render's free plan sleeps the site after ~15 min without visitors; pinging ourselves keeps it awake.
+  if (process.env.RENDER_EXTERNAL_URL && typeof fetch === 'function') {
+    setInterval(() => {
+      fetch(process.env.RENDER_EXTERNAL_URL + '/healthz').catch(() => {});
+    }, 10 * 60 * 1000);
+  }
 });
