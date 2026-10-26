@@ -1,6 +1,6 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
-function wireContactForm(form, { messagePrefix } = {}) {
+function wireContactForm(form) {
   const statusEl = form.querySelector('.form-status');
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalBtnText = submitBtn.textContent;
@@ -15,7 +15,7 @@ function wireContactForm(form, { messagePrefix } = {}) {
       email: form.email.value,
       phone: form.phone.value,
       restaurant: form.restaurant.value,
-      message: messagePrefix ? messagePrefix + form.message.value : form.message.value,
+      message: form.message.value,
     };
 
     submitBtn.disabled = true;
@@ -49,6 +49,3 @@ function wireContactForm(form, { messagePrefix } = {}) {
 
 const contactForm = document.getElementById('contact-form');
 if (contactForm) wireContactForm(contactForm);
-
-const customRequestForm = document.getElementById('custom-request-form');
-if (customRequestForm) wireContactForm(customRequestForm, { messagePrefix: 'Custom request: ' });

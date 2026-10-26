@@ -50,7 +50,7 @@ h1, h2, h3 {
   color: var(--brown-900);
 }
 
-h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; }
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; text-wrap: balance; }
 h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
 h3 { font-size: 1.25rem; }
 
@@ -73,6 +73,9 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   color: var(--brown-500);
   font-size: 1.05rem;
 }
+.section-title + .benefit-grid,
+.section-title + .steps,
+.section-title + .pricing-grid { margin-top: 48px; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -157,7 +160,7 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 24px;
   flex: 1;
   justify-content: center;
 }
@@ -166,6 +169,7 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: var(--terracotta); }
 
@@ -178,6 +182,7 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 }
 
 .hero-inner { max-width: 780px; text-align: center; margin: 0 auto; }
+.hero h1 span { display: inline-block; }
 
 .logo-mark-hero {
   width: 92px;
@@ -473,19 +478,8 @@ p { margin: 0 0 16px; color: var(--brown-700); }
   margin: 64px auto 0;
   text-align: center;
 }
-.pricing-other-image {
-  display: block;
-  width: 100%;
-  max-width: 280px;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  margin: 0 auto 24px;
-}
 .pricing-other h3 { font-size: 1.4rem; margin-bottom: 12px; }
-.pricing-other > p { color: var(--brown-500); margin-bottom: 32px; }
-.pricing-other .contact-form { text-align: left; }
+.pricing-other > p { color: var(--brown-500); margin-bottom: 24px; }
 
 /* ---------- FAQ ---------- */
 .faq { padding: 96px 0; background: var(--cream-alt); }
@@ -607,14 +601,13 @@ p { margin: 0 0 16px; color: var(--brown-700); }
 }
 .footer-inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
   font-size: 0.9rem;
 }
 .footer-inner p { margin: 0; color: inherit; }
 .footer-brand { display: flex; align-items: center; }
-.footer-tagline { font-family: var(--font-display); color: var(--gold); }
 
 /* ---------- Admin ---------- */
 .admin-body {
@@ -758,8 +751,11 @@ tr[data-status="Lost"] .status-select { color: var(--brown-500); border-color: v
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 860px) {
+@media (max-width: 1040px) {
   .nav-links { display: none; }
+}
+
+@media (max-width: 860px) {
   .benefit-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; gap: 40px; }
   .case-study-grid { grid-template-columns: 1fr; gap: 24px; }
