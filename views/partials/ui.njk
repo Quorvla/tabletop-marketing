@@ -1,0 +1,151 @@
+{# Reusable building blocks. Import what a page needs:
+   {% from "partials/ui.njk" import icon, cta, picture %} #}
+
+{% macro icon(name, cls="icon") -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{%- if name == "check" %}<path d="M5 12.5l4.5 4.5L19 7.5"/>
+{%- elif name == "x" %}<path d="M6 6l12 12M18 6L6 18"/>
+{%- elif name == "arrow" %}<path d="M5 12h14M13 6l6 6-6 6"/>
+{%- elif name == "clock" %}<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+{%- elif name == "pin" %}<path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>
+{%- elif name == "phone" %}<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>
+{%- elif name == "mail" %}<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+{%- elif name == "globe" %}<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+{%- elif name == "star" %}<path fill="currentColor" stroke="none" d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6L2.5 9.5l6.6-.9z"/>
+{%- elif name == "calendar" %}<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
+{%- elif name == "chat" %}<path d="M4 5h16v11H9l-5 4z"/>
+{%- elif name == "tag" %}<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/>
+{%- elif name == "user" %}<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>
+{%- elif name == "laptop" %}<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>
+{%- elif name == "bolt" %}<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>
+{%- elif name == "doc" %}<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>
+{%- elif name == "shield" %}<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2.2 2.2L15 10.5"/>
+{%- elif name == "alert" %}<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.2v.3"/>
+{%- elif name == "facebook" %}<path fill="currentColor" stroke="none" d="M13.6 21.5v-8.2h2.8l.4-3.2h-3.2V8c0-.9.3-1.6 1.6-1.6h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.4v3.2h2.8v8.2z"/>
+{%- elif name == "instagram" %}<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".7" fill="currentColor" stroke="none"/>
+{%- endif %}</svg>
+{%- endmacro %}
+
+{# A tracked call-to-action button. `where` names the spot on the page for analytics. #}
+{% macro cta(label, href, where, variant="primary", size="") -%}
+<a class="btn btn--{{ variant }}{% if size %} btn--{{ size }}{% endif %}" href="{{ href }}" data-cta="{{ label }}" data-cta-location="{{ where }}">{{ label }}</a>
+{%- endmacro %}
+
+{# A responsive photo in AVIF and WebP with a JPEG fallback. Width and height prevent layout shift. #}
+{% macro picture(name, alt, width, height, sizes, lazy=true) -%}
+<picture>
+  <source type="image/avif" srcset="{{ asset('/images/' + name + '-480.avif') }} 480w, {{ asset('/images/' + name + '-800.avif') }} 800w, {{ asset('/images/' + name + '-1200.avif') }} 1200w" sizes="{{ sizes }}">
+  <source type="image/webp" srcset="{{ asset('/images/' + name + '-480.webp') }} 480w, {{ asset('/images/' + name + '-800.webp') }} 800w, {{ asset('/images/' + name + '-1200.webp') }} 1200w" sizes="{{ sizes }}">
+  <img src="{{ asset('/images/' + name + '-800.jpg') }}" alt="{{ alt }}" width="{{ width }}" height="{{ height }}"{% if lazy %} loading="lazy"{% endif %} decoding="async">
+</picture>
+{%- endmacro %}
+
+{% macro breadcrumbs(trail) -%}
+{% if trail | length > 1 %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {% for crumb in trail %}
+    <li>{% if loop.last %}<span aria-current="page">{{ crumb.name }}</span>{% else %}<a href="{{ crumb.path }}">{{ crumb.name }}</a>{% endif %}</li>
+    {% endfor %}
+  </ol>
+</nav>
+{% endif %}
+{%- endmacro %}
+
+{% macro checkList(items, cls="") -%}
+<ul class="check-list{% if cls %} {{ cls }}{% endif %}">
+  {% for item in items %}
+  <li>{{ icon("check", "check-list__icon") }}<span>{{ item }}</span></li>
+  {% endfor %}
+</ul>
+{%- endmacro %}
+
+{% macro faqList(items) -%}
+<div class="faq">
+  {% for item in items %}
+  <details class="faq__item">
+    <summary><span>{{ item.q }}</span><span class="faq__toggle" aria-hidden="true"></span></summary>
+    <div class="faq__answer"><p>{{ item.a }}</p></div>
+  </details>
+  {% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro steps(items) -%}
+<ol class="steps steps--{{ items | length }}">
+  {% for step in items %}
+  <li class="step" data-reveal>
+    <span class="step__num" aria-hidden="true">{{ loop.index }}</span>
+    <h3 class="step__title">{{ step.title }}</h3>
+    <p>{{ step.text }}</p>
+  </li>
+  {% endfor %}
+</ol>
+{%- endmacro %}
+
+{# The closing call to action used at the bottom of most pages. #}
+{% macro ctaBand(where, heading="Ready to get found?", text="") -%}
+<section class="cta-band on-dark" aria-labelledby="cta-band-title">
+  <div class="container cta-band__inner">
+    <h2 id="cta-band-title">{{ heading }}</h2>
+    <p>{{ text or "Book a free " ~ site.consultation.minutes ~ "-minute consultation. You leave knowing what we would fix and what it costs." }}</p>
+    <div class="cta-band__actions">
+      {{ cta("Book a Free Consultation", "/free-consultation", where, "primary", "lg") }}
+      {{ cta("Send Us a Message", "/contact", where, "ghost", "lg") }}
+    </div>
+    {% if site.contact.phone or site.contact.email %}
+    <p class="cta-band__direct">Prefer to reach us directly?
+      {% if site.contact.phone %}Call <a href="{{ site.contact.phoneHref }}" data-contact="phone">{{ site.contact.phone }}</a>{% endif %}
+      {% if site.contact.phone and site.contact.email %} or {% endif %}
+      {% if site.contact.email %}email <a href="{{ site.contact.emailHref }}" data-contact="email">{{ site.contact.email }}</a>{% endif %}.
+    </p>
+    {% endif %}
+  </div>
+</section>
+{%- endmacro %}
+
+{# Illustration: a completed business profile. Decorative text is hidden from screen readers; the label describes it. #}
+{% macro profileCard(animated=true) -%}
+<figure class="profile-card{% if animated %} profile-card--animated{% endif %}" role="img" aria-label="Illustration of a completed business profile: hours confirmed, photos added, reviews answered and a new post published.">
+  <div class="profile-card__photos" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="profile-card__body" aria-hidden="true">
+    <div class="profile-card__head">
+      <p class="profile-card__name">Your Business</p>
+      <span class="profile-card__tag">Example</span>
+    </div>
+    <p class="profile-card__meta"><span class="profile-card__stars">{{ icon("star") }}{{ icon("star") }}{{ icon("star") }}{{ icon("star") }}{{ icon("star") }}</span><span>Local business</span></p>
+    <p class="profile-card__status"><span class="profile-card__dot"></span><strong>Open</strong> · Closes 6 p.m.</p>
+    <div class="profile-card__actions"><span>{{ icon("phone") }}Call</span><span>{{ icon("pin") }}Directions</span><span>{{ icon("globe") }}Website</span></div>
+    <ul class="profile-card__checks">
+      <li><span class="profile-card__tick">{{ icon("check") }}</span>Hours confirmed</li>
+      <li><span class="profile-card__tick">{{ icon("check") }}</span>5 photos added</li>
+      <li><span class="profile-card__tick">{{ icon("check") }}</span>Reviews answered</li>
+      <li><span class="profile-card__tick">{{ icon("check") }}</span>New post published</li>
+    </ul>
+  </div>
+  <div class="profile-card__chip" aria-hidden="true">{{ icon("doc") }}<span>Follow-up report sent</span></div>
+</figure>
+{%- endmacro %}
+
+{# Illustration: a one-page website in a browser window. #}
+{% macro browserMock() -%}
+<figure class="browser-mock" role="img" aria-label="Illustration of a one-page business website with a headline, opening hours, a map and a contact button.">
+  <div class="browser-mock__bar" aria-hidden="true"><span></span><span></span><span></span><em>Your website</em></div>
+  <div class="browser-mock__page" aria-hidden="true">
+    <div class="browser-mock__hero">
+      <p class="browser-mock__name">Your Business</p>
+      <p class="browser-mock__line"></p>
+      <p class="browser-mock__line browser-mock__line--short"></p>
+      <span class="browser-mock__btn">Call us</span>
+    </div>
+    <div class="browser-mock__grid">
+      <div class="browser-mock__hours">
+        <p>Hours</p>
+        <ul><li><span>Mon to Fri</span><span>9 to 6</span></li><li><span>Saturday</span><span>10 to 4</span></li><li><span>Sunday</span><span>Closed</span></li></ul>
+      </div>
+      <div class="browser-mock__map">{{ icon("pin") }}</div>
+    </div>
+    <div class="browser-mock__photos"><span></span><span></span><span></span></div>
+  </div>
+</figure>
+{%- endmacro %}

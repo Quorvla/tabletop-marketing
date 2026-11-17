@@ -1,0 +1,88 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import breadcrumbs %}
+
+{% block content %}
+
+<section class="page-hero on-dark" aria-labelledby="page-title">
+  <div class="container narrow">
+    {{ breadcrumbs(page.trail) }}
+    <h1 id="page-title">Privacy policy</h1>
+    <p class="page-hero__lead">What we collect through this website, why, and the choices you have. Last updated {{ page.updated | longDate }}.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container narrow prose">
+
+    <h2>Who we are</h2>
+    <p>This website is run by {{ site.name }} (“we”, “us”). We help local businesses in {{ site.serviceArea.label }} with their Google Business Profile and with simple websites. This policy explains how we handle personal information collected through this site.</p>
+
+    <h2>What we collect</h2>
+    <p>We only collect what you choose to send us through the forms on this site:</p>
+    <ul>
+      <li>your name and email address</li>
+      <li>your business name and phone number, if you provide them</li>
+      <li>the service you are interested in and the best time to reach you, if you tell us</li>
+      <li>whatever you write in your message</li>
+    </ul>
+    <p>Like most websites, the companies that host this site also keep standard technical logs, such as your IP address, browser type and the pages requested. We use that information only to keep the site secure and working, and to limit spam.</p>
+
+    <h2>How we use it</h2>
+    <ul>
+      <li>to reply to your message or consultation request</li>
+      <li>to prepare a quote or carry out work you have asked for</li>
+      <li>to keep a record of our conversations with you</li>
+      <li>to protect the site from spam and abuse</li>
+    </ul>
+    <p>We do not sell your information. We do not add you to a mailing list because you filled in a form.</p>
+
+    <h2>Cookies and tracking</h2>
+    {% if tracking.enabled %}
+    <p>This site uses Google services to understand how visitors use it and to measure whether our advertising works. Those services set cookies and collect information such as the pages you view, the buttons you press, your approximate location and details about your device. Google’s own policy explains <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how it uses information from sites that use its services<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+    <p>You can block these cookies in your browser settings, or install <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google’s opt-out add-on<span class="visually-hidden"> (opens in a new tab)</span></a>. The site works the same either way.</p>
+    {% else %}
+    <p>This site does not use advertising cookies or analytics trackers. The pages you visit are not followed from one site to another.</p>
+    <p>If that ever changes, this section will be updated first.</p>
+    {% endif %}
+    <p>Your browser may briefly store a small note that a form was sent, so that reloading the thank-you page does not count it twice. It holds no personal information and is cleared when you close the tab.</p>
+
+    <h2>Who we share it with</h2>
+    <p>We share personal information only with the service providers that run this website for us, and only so they can provide that service:</p>
+    <ul>
+      <li>a website hosting company, which serves these pages</li>
+      <li>a database hosting company, which stores form submissions</li>
+      {% if tracking.enabled %}<li>Google, for the analytics and advertising measurement described above</li>{% endif %}
+    </ul>
+    <p>Some of these providers are located outside Canada, including in the United States, so your information may be stored and processed there and be subject to the laws of that country.</p>
+    <p>We may also disclose information if the law requires it.</p>
+
+    <h2>How long we keep it</h2>
+    <p>We keep form submissions for as long as we need them to respond to you, to do any work you ask for and to keep reasonable business records. You can ask us to delete yours at any time.</p>
+
+    <h2>How we protect it</h2>
+    <p>This site is served over an encrypted connection. Form submissions are stored in a private database, and only the business owner can see them, behind a password. No system is perfectly secure, but we take reasonable steps to protect what you send us.</p>
+
+    <h2>Your choices</h2>
+    <p>You can ask us to:</p>
+    <ul>
+      <li>show you the personal information we hold about you</li>
+      <li>correct anything that is wrong</li>
+      <li>delete your information</li>
+      <li>stop contacting you</li>
+    </ul>
+    <p>To make a request, {% if site.contact.email %}email <a href="{{ site.contact.emailHref }}">{{ site.contact.email }}</a> or {% endif %}use the <a href="/contact">contact form</a>. We will respond within 30 days.</p>
+    <p>If you are not satisfied with our answer, you can contact the <a href="https://www.priv.gc.ca/en/" target="_blank" rel="noopener noreferrer">Office of the Privacy Commissioner of Canada<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+
+    <h2>Children</h2>
+    <p>This site is meant for business owners. It is not directed at children, and we do not knowingly collect information from them.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If we change how we handle personal information, we will update this page and the date at the top.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy? {% if site.contact.email %}Email <a href="{{ site.contact.emailHref }}">{{ site.contact.email }}</a> or send{% else %}Send{% endif %} us a message through the <a href="/contact">contact form</a>.</p>
+
+  </div>
+</section>
+
+{% endblock %}

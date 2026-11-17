@@ -1,0 +1,125 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, cta, picture, breadcrumbs, ctaBand %}
+
+{% block content %}
+
+<section class="page-hero on-dark" aria-labelledby="page-title">
+  <div class="container">
+    {{ breadcrumbs(page.trail) }}
+    <p class="eyebrow">About {{ site.name }}</p>
+    <h1 id="page-title">We make local businesses easy to find and easy to choose.</h1>
+    <p class="page-hero__lead">{{ site.name }} is a small, fully remote studio that does two things well: cleaning up Google Business Profiles and building simple websites. Fixed prices, short timelines and no contracts.</p>
+  </div>
+</section>
+
+{# ---------- Company introduction ---------- #}
+<section class="section" aria-labelledby="intro-title">
+  <div class="container split">
+    <div class="split__copy">
+      <p class="eyebrow">Who we are</p>
+      <h2 id="intro-title">Small on purpose.</h2>
+      <p class="lead">Most local businesses are very good at what they do and far too busy to manage how they look online. The usual answer is a monthly retainer with an agency, which many small shops do not need and cannot justify.</p>
+      <p class="lead">Quorvia exists for the gap in between. We handle the basics that decide whether a nearby customer finds you and trusts what they see, and we do it as a one-time project with a price you can read on this site.</p>
+      <ul class="pill-list">
+        <li>{{ icon("pin") }}<span>Serving {{ site.serviceArea.label }}</span></li>
+        <li>{{ icon("laptop") }}<span>Fully remote</span></li>
+        <li>{{ icon("user") }}<span>One person, start to finish</span></li>
+      </ul>
+    </div>
+    <div class="split__media split__media--landscape" data-reveal>
+      {{ picture("laptop", "Hands typing on a laptop at a wooden desk", 800, 600, "(min-width: 960px) 520px, 92vw") }}
+    </div>
+  </div>
+</section>
+
+{# ---------- How we work: the process, in plain terms ---------- #}
+<section class="section section--tint" aria-labelledby="process-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Our process</p>
+      <h2 id="process-title">How we work with you.</h2>
+      <p class="lead">The same four steps every time, so you always know what happens next.</p>
+    </header>
+    <ol class="steps steps--4">
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">1</span>
+        <h3 class="step__title">We listen first</h3>
+        <p>A free {{ site.consultation.minutes }}-minute consultation about your business and what you want to fix.</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">2</span>
+        <h3 class="step__title">We agree the scope</h3>
+        <p>A fixed package at a fixed price, or a custom plan quoted before any work starts.</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">3</span>
+        <h3 class="step__title">We do the work</h3>
+        <p>Remotely and quickly: 2–3 business days for a profile cleanup, about a week for a website.</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">4</span>
+        <h3 class="step__title">We show you what changed</h3>
+        <p>A short report for a profile cleanup, or your live link for a website.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+{# ---------- Principles ---------- #}
+<section class="section" aria-labelledby="principles-title">
+  <div class="container why">
+    <header class="why__head">
+      <p class="eyebrow">What we stand for</p>
+      <h2 id="principles-title">A few things we will not do.</h2>
+      <p class="lead">Being clear about these up front saves everyone time.</p>
+    </header>
+    <ol class="why__list">
+      <li data-reveal><h3>We will not lock you into a contract</h3><p>Every project is one-time. If you want more help later, that is your call.</p></li>
+      <li data-reveal><h3>We will not promise rankings</h3><p>Google decides where listings appear. We promise the work, and we are honest about what it can and cannot do.</p></li>
+      <li data-reveal><h3>We will not post fake reviews</h3><p>We write replies to the real reviews you already have. Nothing invented, ever.</p></li>
+      <li data-reveal><h3>We will not hide the price</h3><p>Package prices are on this site. Anything custom is quoted before work begins.</p></li>
+    </ol>
+  </div>
+</section>
+
+{% if site.founder %}
+<section class="section section--tint" aria-labelledby="founder-title">
+  <div class="container narrow">
+    <p class="eyebrow">Who you will be working with</p>
+    <h2 id="founder-title">{{ site.founder.name }}, {{ site.founder.role }}</h2>
+    <p class="lead">{{ site.founder.note }}</p>
+  </div>
+</section>
+{% endif %}
+
+{# ---------- What we offer ---------- #}
+<section class="section section--tint" aria-labelledby="offer-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">What we offer</p>
+      <h2 id="offer-title">Two services, both fixed price.</h2>
+    </header>
+    <div class="service-grid">
+      {% for service in services %}
+      <article class="service-card service-card--wide" data-reveal>
+        <div>
+          <p class="service-card__kind">{{ service.kind }}</p>
+          <h3 class="service-card__name">{{ service.name }}</h3>
+          <p class="service-card__teaser">{{ service.teaser }}</p>
+        </div>
+        <div class="service-card__foot">
+          <p class="price">
+            <span class="price__amount">{{ service.price | money }}</span>
+            <span class="price__terms">{{ service.priceTerms }}<br>{{ service.turnaround }}.</span>
+          </p>
+          <a class="btn btn--outline" href="/services/{{ service.slug }}" data-cta="See what is included" data-cta-location="about: {{ service.slug }}">See what is included<span class="visually-hidden"> in the {{ service.name }}</span></a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{{ ctaBand("about final cta", "Let’s talk about your business.") }}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% from "partials/ui.njk" import icon %}
+{% set navItems = [
+  { "label": "Services", "href": "/services" },
+  { "label": "About", "href": "/about" },
+  { "label": "Contact", "href": "/contact" }
+] %}
+<header class="site-header on-dark">
+  <div class="container site-header__inner">
+    <a class="brand" href="/" aria-label="{{ site.name }} home">
+      {{ logoMark("brand__mark") }}
+      <span class="brand__name">Quorvia <span>Marketing</span></span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main">
+      <ul>
+        {% for item in navItems %}
+        <li><a href="{{ item.href }}"{% if page.path == item.href %} aria-current="page"{% elif page.path.startsWith(item.href + "/") %} class="is-active"{% endif %}>{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    {% if site.contact.phone %}
+    <a class="site-header__phone" href="{{ site.contact.phoneHref }}" data-contact="phone">{{ icon("phone") }}<span>{{ site.contact.phone }}</span></a>
+    {% endif %}
+
+    <a class="btn btn--primary btn--sm site-header__cta" href="/free-consultation" data-cta="Book a Free Consultation" data-cta-location="header">
+      <span class="site-header__cta-long">Book a Free Consultation</span>
+      <span class="site-header__cta-short">Free Consultation</span>
+    </a>
+
+    <details class="nav-mobile">
+      <summary aria-label="Menu"><span class="nav-mobile__icon" aria-hidden="true"></span></summary>
+      <nav aria-label="Main menu">
+        <ul>
+          <li><a href="/"{% if page.path == "/" %} aria-current="page"{% endif %}>Home</a></li>
+          {% for item in navItems %}
+          <li><a href="{{ item.href }}"{% if page.path == item.href %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+          {% endfor %}
+        </ul>
+        <a class="btn btn--primary btn--lg" href="/free-consultation" data-cta="Book a Free Consultation" data-cta-location="mobile menu">Book a Free Consultation</a>
+        {% if site.contact.phone %}
+        <a class="nav-mobile__phone" href="{{ site.contact.phoneHref }}" data-contact="phone">{{ icon("phone") }}<span>Call {{ site.contact.phone }}</span></a>
+        {% endif %}
+      </nav>
+    </details>
+  </div>
+</header>

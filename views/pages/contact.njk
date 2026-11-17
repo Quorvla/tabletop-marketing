@@ -1,0 +1,47 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, cta, breadcrumbs %}
+{% from "partials/forms.njk" import leadForm %}
+
+{% block content %}
+
+<section class="page-hero on-dark" aria-labelledby="page-title">
+  <div class="container">
+    {{ breadcrumbs(page.trail) }}
+    <p class="eyebrow">Contact</p>
+    <h1 id="page-title">Send us a message</h1>
+    <p class="page-hero__lead">A question, a custom request or just not sure where to start? Write to us and we reply within {{ site.replyTime }}.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Contact form">
+  <div class="container form-layout">
+    <div class="form-layout__aside">
+      <h2>Other ways to reach us</h2>
+
+      <div class="contact-lines">
+        {% if site.contact.phone %}<a href="{{ site.contact.phoneHref }}" data-contact="phone">{{ icon("phone") }}<span>{{ site.contact.phone }}</span></a>{% endif %}
+        {% if site.contact.email %}<a href="{{ site.contact.emailHref }}" data-contact="email">{{ icon("mail") }}<span>{{ site.contact.email }}</span></a>{% endif %}
+        {% for profile in site.social %}
+        <a href="{{ profile.url }}" target="_blank" rel="noopener noreferrer me" data-contact="{{ profile.name | lower }}">{{ icon(profile.icon) }}<span>{{ profile.name }}<span class="visually-hidden"> (opens in a new tab)</span></span></a>
+        {% endfor %}
+        <p>{{ icon("clock") }}<span>Replies within {{ site.replyTime }}</span></p>
+        <p>{{ icon("pin") }}<span>Serving {{ site.serviceArea.label }}, fully remote</span></p>
+      </div>
+
+      <div class="callout">
+        <h3>Would you rather talk it through?</h3>
+        <p>Book a free {{ site.consultation.minutes }}-minute consultation. You leave knowing what we would fix and what it costs.</p>
+        {{ cta("Book a Free Consultation", "/free-consultation", "contact aside") }}
+      </div>
+
+      <p class="form-layout__links">Looking for prices? See <a href="/services">services and pricing</a>, or read the <a href="/#faq">frequently asked questions</a>.</p>
+    </div>
+
+    <div class="form-card">
+      <h2>Write to us</h2>
+      {{ leadForm("contact", form, { "serviceOptions": serviceOptions, "timeOptions": timeOptions, "limits": limits, "honeypotField": honeypotField, "challenge": challenge }) }}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

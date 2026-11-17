@@ -1,0 +1,103 @@
+{# The lead form, used for both "contact" and "consultation".
+   It works without JavaScript (the browser posts it and the server replies with a full page).
+   With JavaScript it validates as you type, shows a sending state and goes to the thank-you page. #}
+{% from "partials/ui.njk" import icon %}
+
+{% macro fieldError(form, kind, name) -%}
+<p class="field__error" id="{{ kind }}-{{ name }}-error" data-error-for="{{ name }}"{% if not form.errors[name] %} hidden{% endif %}>{{ form.errors[name] or "" }}</p>
+{%- endmacro %}
+
+{% macro leadForm(kind, form, options) %}
+{% set isConsult = kind == "consultation" %}
+<form class="lead-form" id="{{ kind }}-form" method="post" action="{{ '/free-consultation' if isConsult else '/contact' }}" data-lead-form data-kind="{{ kind }}">
+  <div class="form-alert" data-form-alert role="alert" tabindex="-1"{% if not form.failed %} hidden{% endif %}>
+    {{ icon("alert") }}
+    <p data-form-alert-text>{{ form.message or "" }}</p>
+  </div>
+
+  <p class="lead-form__legend">Fields are required unless marked optional.</p>
+
+  <div class="field-row">
+    <div class="field{% if form.errors.name %} field--invalid{% endif %}">
+      <label for="{{ kind }}-name">Your name</label>
+      <input type="text" id="{{ kind }}-name" name="name" value="{{ form.values.name or '' }}" autocomplete="name" required maxlength="{{ options.limits.name }}" aria-describedby="{{ kind }}-name-error"{% if form.errors.name %} aria-invalid="true"{% endif %}>
+      {{ fieldError(form, kind, "name") }}
+    </div>
+    <div class="field{% if form.errors.email %} field--invalid{% endif %}">
+      <label for="{{ kind }}-email">Email</label>
+      <input type="email" id="{{ kind }}-email" name="email" value="{{ form.values.email or '' }}" autocomplete="email" inputmode="email" required maxlength="{{ options.limits.email }}" aria-describedby="{{ kind }}-email-error"{% if form.errors.email %} aria-invalid="true"{% endif %}>
+      {{ fieldError(form, kind, "email") }}
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field{% if form.errors.business %} field--invalid{% endif %}">
+      <label for="{{ kind }}-business">Business name{% if not isConsult %} <span class="field__optional">(optional)</span>{% endif %}</label>
+      <input type="text" id="{{ kind }}-business" name="business" value="{{ form.values.business or '' }}" autocomplete="organization"{% if isConsult %} required{% endif %} maxlength="{{ options.limits.business }}" aria-describedby="{{ kind }}-business-error"{% if form.errors.business %} aria-invalid="true"{% endif %}>
+      {{ fieldError(form, kind, "business") }}
+    </div>
+    <div class="field{% if form.errors.phone %} field--invalid{% endif %}">
+      <label for="{{ kind }}-phone">Phone <span class="field__optional">(optional)</span></label>
+      <input type="tel" id="{{ kind }}-phone" name="phone" value="{{ form.values.phone or '' }}" autocomplete="tel" inputmode="tel" maxlength="{{ options.limits.phone }}" aria-describedby="{{ kind }}-phone-error"{% if form.errors.phone %} aria-invalid="true"{% endif %}>
+      {{ fieldError(form, kind, "phone") }}
+    </div>
+  </div>
+
+  {% if isConsult %}
+  <div class="field-row">
+    <div class="field">
+      <label for="{{ kind }}-service">Interested in <span class="field__optional">(optional)</span></label>
+      <select id="{{ kind }}-service" name="service">
+        <option value="">Choose one</option>
+        {% for option in options.serviceOptions %}
+        <option value="{{ option.value }}"{% if form.values.service == option.value %} selected{% endif %}>{{ option.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="{{ kind }}-bestTime">Best time to reach you <span class="field__optional">(optional)</span></label>
+      <select id="{{ kind }}-bestTime" name="bestTime">
+        <option value="">Choose one</option>
+        {% for option in options.timeOptions %}
+        <option value="{{ option.value }}"{% if form.values.bestTime == option.value %} selected{% endif %}>{{ option.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="field{% if form.errors.message %} field--invalid{% endif %}">
+    <label for="{{ kind }}-message">{% if isConsult %}Anything we should know? <span class="field__optional">(optional)</span>{% else %}How can we help?{% endif %}</label>
+    <textarea id="{{ kind }}-message" name="message" rows="5"{% if not isConsult %} required{% endif %} maxlength="{{ options.limits.message }}" aria-describedby="{{ kind }}-message-error"{% if form.errors.message %} aria-invalid="true"{% endif %}>{{ form.values.message or "" }}</textarea>
+    {{ fieldError(form, kind, "message") }}
+  </div>
+
+  {# Hidden from people. Anything that fills it in is treated as a bot. #}
+  <div class="hp-field" aria-hidden="true">
+    <label for="{{ kind }}-fax">Leave this field empty</label>
+    <input type="text" id="{{ kind }}-fax" name="{{ options.honeypotField }}" tabindex="-1" autocomplete="off">
+  </div>
+
+  {# Only visitors without JavaScript ever see this question. #}
+  {% if form.showChallenge %}
+  <div class="field{% if form.errors.human_check %} field--invalid{% endif %}">
+    <label for="{{ kind }}-human">Quick check: {{ options.challenge.question }}</label>
+    <input type="text" id="{{ kind }}-human" name="{{ options.challenge.field }}" inputmode="numeric" autocomplete="off" required aria-describedby="{{ kind }}-human_check-error"{% if form.errors.human_check %} aria-invalid="true"{% endif %}>
+    {{ fieldError(form, kind, "human_check") }}
+  </div>
+  {% else %}
+  <noscript>
+    <div class="field">
+      <label for="{{ kind }}-human">Quick check: {{ options.challenge.question }}</label>
+      <input type="text" id="{{ kind }}-human" name="{{ options.challenge.field }}" inputmode="numeric" autocomplete="off" required>
+    </div>
+  </noscript>
+  {% endif %}
+
+  <button type="submit" class="btn btn--primary btn--lg lead-form__submit" data-submit>
+    <span class="lead-form__spinner" aria-hidden="true"></span>
+    <span data-submit-label>{{ "Request My Free Consultation" if isConsult else "Send Message" }}</span>
+  </button>
+  <p class="lead-form__note">We reply within {{ site.replyTime }}. By sending this form you agree to our <a href="/privacy">privacy policy</a>.</p>
+</form>
+{% endmacro %}

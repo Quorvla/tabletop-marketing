@@ -1,0 +1,54 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, picture, breadcrumbs %}
+{% from "partials/forms.njk" import leadForm %}
+
+{% block content %}
+
+<section class="page-hero on-dark" aria-labelledby="page-title">
+  <div class="container">
+    {{ breadcrumbs(page.trail) }}
+    <p class="eyebrow">Free consultation</p>
+    <h1 id="page-title">Book your free <span class="nowrap">{{ site.consultation.minutes }}-minute</span> consultation</h1>
+    <p class="page-hero__lead">Tell us a little about your business. We reply within {{ site.replyTime }} to set a time that works for you.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Consultation request">
+  <div class="container form-layout">
+    <div class="form-layout__aside">
+      <h2>What to expect</h2>
+      <ul class="expect-list">
+        <li>{{ icon("clock") }}<div><h3>{{ site.consultation.minutes }} minutes, free</h3><p>A relaxed conversation about your business and what you want to fix.</p></div></li>
+        <li>{{ icon("doc") }}<div><h3>A clear plan</h3><p>You leave knowing what we would do and what it costs.</p></div></li>
+        <li>{{ icon("shield") }}<div><h3>No obligation</h3><p>If it is not a fit, no hard feelings and no follow-up pressure.</p></div></li>
+      </ul>
+
+      {% if site.consultation.bookingUrl %}
+      <div class="callout callout--plain">
+        <h3>Prefer to pick a time yourself?</h3>
+        <p>Choose a slot on our calendar and skip the form.</p>
+        <a class="btn btn--outline" href="{{ site.consultation.bookingUrl }}" target="_blank" rel="noopener noreferrer" data-booking-link>Open the booking calendar<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </div>
+      {% endif %}
+
+      {% if site.contact.phone or site.contact.email %}
+      <div class="contact-lines">
+        <h3>Rather reach us directly?</h3>
+        {% if site.contact.phone %}<a href="{{ site.contact.phoneHref }}" data-contact="phone">{{ icon("phone") }}<span>{{ site.contact.phone }}</span></a>{% endif %}
+        {% if site.contact.email %}<a href="{{ site.contact.emailHref }}" data-contact="email">{{ icon("mail") }}<span>{{ site.contact.email }}</span></a>{% endif %}
+      </div>
+      {% endif %}
+
+      <div class="form-layout__photo" data-reveal>
+        {{ picture("phone", "A person holding a phone in both hands", 800, 600, "(min-width: 960px) 420px, 92vw") }}
+      </div>
+    </div>
+
+    <div class="form-card" id="book">
+      <h2>Request your consultation</h2>
+      {{ leadForm("consultation", form, { "serviceOptions": serviceOptions, "timeOptions": timeOptions, "limits": limits, "honeypotField": honeypotField, "challenge": challenge }) }}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

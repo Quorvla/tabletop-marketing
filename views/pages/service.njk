@@ -1,0 +1,176 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, cta, checkList, faqList, steps, breadcrumbs, ctaBand, profileCard, browserMock %}
+
+{% block content %}
+
+{# ---------- What it is, what it costs, how to start ---------- #}
+<section class="page-hero page-hero--service on-dark" aria-labelledby="page-title">
+  <div class="container page-hero__grid">
+    <div>
+      {{ breadcrumbs(page.trail) }}
+      <p class="eyebrow">{{ service.name }}</p>
+      <h1 id="page-title">{{ service.hero.heading }}</h1>
+      <p class="page-hero__lead">{{ service.hero.lead }}</p>
+      <div class="page-hero__actions">
+        <a class="btn btn--primary btn--lg" href="/free-consultation?service={{ service.slug }}" data-cta="Book a Free Consultation" data-cta-location="service hero: {{ service.slug }}">Book a Free Consultation</a>
+        <a class="btn btn--ghost btn--lg" href="#included" data-cta="See what is included" data-cta-location="service hero: {{ service.slug }}">See what is included</a>
+      </div>
+    </div>
+    <aside class="price-card" aria-label="Price and timeline">
+      <p class="price-card__label">{{ service.name }}</p>
+      <p class="price-card__amount">{{ service.price | money }}</p>
+      <p class="price-card__terms">{{ service.priceTerms }}</p>
+      <ul class="price-card__facts">
+        <li>{{ icon("clock") }}<span>{{ service.turnaround }}</span></li>
+        <li>{{ icon("laptop") }}<span>Fully remote</span></li>
+        <li>{{ icon("shield") }}<span>No contract</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+{# ---------- Description and the problems it solves ---------- #}
+<section class="section" aria-labelledby="what-title">
+  <div class="container split split--top">
+    <div class="split__copy">
+      <p class="eyebrow">What it is</p>
+      <h2 id="what-title">{{ service.kind }}, explained simply.</h2>
+      {% for paragraph in service.whatItIs %}
+      <p class="lead">{{ paragraph }}</p>
+      {% endfor %}
+    </div>
+    <div class="callout" data-reveal>
+      <h3>This is for you if&hellip;</h3>
+      <ul class="problem-list">
+        {% for problem in service.problems %}
+        <li>{{ icon("alert") }}<span>{{ problem }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{# ---------- What is included, and what is not ---------- #}
+<section class="section section--tint" id="included" aria-labelledby="included-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">What is included</p>
+      <h2 id="included-title">Everything you get for {{ service.price | money }}.</h2>
+    </header>
+    <div class="included">
+      <ul class="included__list">
+        {% for item in service.included %}
+        <li data-reveal>
+          <span class="included__icon">{{ icon("check") }}</span>
+          <div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.text }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <aside class="excluded" aria-labelledby="excluded-title">
+        <h3 id="excluded-title">Not included</h3>
+        <ul>
+          {% for item in service.notIncluded %}
+          <li>{{ icon("x") }}<span>{{ item }}</span></li>
+          {% endfor %}
+        </ul>
+        <p>{{ service.notIncludedNote or "Want help with any of these afterward? Just ask and we can talk about it." }}</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{# ---------- How the service works ---------- #}
+<section class="section" aria-labelledby="steps-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2 id="steps-title">{{ ["No", "One", "Two", "Three", "Four", "Five", "Six"][service.steps | length] }} steps, start to finish.</h2>
+    </header>
+    {{ steps(service.steps) }}
+  </div>
+</section>
+
+{# ---------- Benefits ---------- #}
+<section class="section section--tint" aria-labelledby="benefits-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Why it is worth doing</p>
+      <h2 id="benefits-title">What this does for your business.</h2>
+    </header>
+    <div class="benefit-grid">
+      {% for benefit in service.benefits %}
+      <article class="benefit" data-reveal>
+        <h3>{{ benefit.title }}</h3>
+        <p>{{ benefit.text }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ---------- Expected outcomes, with no guarantees ---------- #}
+<section class="section" aria-labelledby="outcomes-title">
+  <div class="container split split--top">
+    <div class="split__copy">
+      <p class="eyebrow">What to expect</p>
+      <h2 id="outcomes-title">Clear about what you get. Honest about what nobody can promise.</h2>
+      {{ checkList(service.outcomes.expect, "check-list--lg") }}
+      {% if service.outcomes.research %}
+      <p class="source-note">{{ service.outcomes.research.text }} <a href="{{ service.outcomes.research.sourceUrl }}" target="_blank" rel="noopener noreferrer">Source: {{ service.outcomes.research.sourceName }}<span class="visually-hidden"> (opens in a new tab)</span></a>.</p>
+      {% endif %}
+    </div>
+    <div class="callout callout--plain" data-reveal>
+      <h3>What we cannot promise</h3>
+      <p>{{ service.outcomes.cannot }}</p>
+    </div>
+  </div>
+</section>
+
+{# ---------- Service FAQ ---------- #}
+<section class="section section--tint" aria-labelledby="faq-title">
+  <div class="container faq-layout">
+    <header class="section-head">
+      <p class="eyebrow">Questions</p>
+      <h2 id="faq-title">Questions about the {{ service.name }}</h2>
+      <p class="lead">More general questions are answered on the <a href="/#faq">home page</a>.</p>
+    </header>
+    {{ faqList(service.faqs) }}
+  </div>
+</section>
+
+{# ---------- The other service ---------- #}
+{% if otherServices | length %}
+<section class="section" aria-labelledby="also-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Also from Quorvia</p>
+      <h2 id="also-title">Pairs well with</h2>
+    </header>
+    <div class="service-grid">
+      {% for other in otherServices %}
+      <article class="service-card service-card--wide">
+        <div>
+          <p class="service-card__kind">{{ other.kind }}</p>
+          <h3 class="service-card__name">{{ other.name }}</h3>
+          <p class="service-card__teaser">{{ other.teaser }}</p>
+        </div>
+        <div class="service-card__foot">
+          <p class="price">
+            <span class="price__amount">{{ other.price | money }}</span>
+            <span class="price__terms">{{ other.priceTerms }}<br>{{ other.turnaround }}.</span>
+          </p>
+          <a class="btn btn--outline" href="/services/{{ other.slug }}" data-cta="See what is included" data-cta-location="cross-sell: {{ other.slug }}">See what is included<span class="visually-hidden"> in the {{ other.name }}</span></a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{{ ctaBand("service final cta: " ~ service.slug, "Ready to get started?", "Book a free " ~ site.consultation.minutes ~ "-minute consultation about the " ~ service.name ~ ". No obligation.") }}
+
+{% endblock %}

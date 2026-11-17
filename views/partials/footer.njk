@@ -1,0 +1,63 @@
+{% from "partials/ui.njk" import icon %}
+<footer class="site-footer on-dark">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a class="brand" href="/" aria-label="{{ site.name }} home">
+          {{ logoMark("brand__mark") }}
+          <span class="brand__name">Quorvia <span>Marketing</span></span>
+        </a>
+        <p>{{ site.tagline }}</p>
+        <p class="site-footer__area">{{ icon("pin") }}<span>Serving {{ site.serviceArea.label }}. Fully remote.</span></p>
+        {% if site.social | length %}
+        <ul class="site-footer__social">
+          {% for profile in site.social %}
+          <li><a href="{{ profile.url }}" target="_blank" rel="noopener noreferrer me" aria-label="{{ site.name }} on {{ profile.name }} (opens in a new tab)" data-contact="{{ profile.name | lower }}">{{ icon(profile.icon) }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+      <nav aria-label="Services">
+        <h2 class="site-footer__title">Services</h2>
+        <ul>
+          <li><a href="/services/google-business-profile">Google Business Profile cleanup</a></li>
+          <li><a href="/services/website-design">One-page website design</a></li>
+          <li><a href="/services">All services and pricing</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Company">
+        <h2 class="site-footer__title">Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/free-consultation">Free consultation</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="site-footer__title">Get in touch</h2>
+        <ul>
+          {% if site.contact.email %}
+          <li><a href="{{ site.contact.emailHref }}" data-contact="email">{{ site.contact.email }}</a></li>
+          {% endif %}
+          {% if site.contact.phone %}
+          <li><a href="{{ site.contact.phoneHref }}" data-contact="phone">{{ site.contact.phone }}</a></li>
+          {% endif %}
+          <li><a href="/contact">Send us a message</a></li>
+          <li>Replies within {{ site.replyTime }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>&copy; {{ currentYear() }} {{ site.name }}. All rights reserved.</p>
+      <ul>
+        <li><a href="/privacy">Privacy policy</a></li>
+        <li><a href="/terms">Terms and conditions</a></li>
+      </ul>
+    </div>
+    <p class="site-footer__legal">{{ site.name }} is an independent business and is not affiliated with or endorsed by Google. Google and Google Business Profile are trademarks of Google LLC.</p>
+  </div>
+</footer>

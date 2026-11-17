@@ -1,0 +1,32 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, cta %}
+
+{% block content %}
+
+<section class="page-hero page-hero--center on-dark" aria-labelledby="page-title">
+  <div class="container narrow">
+    <p class="eyebrow">Error 404</p>
+    <h1 id="page-title">We could not find that page.</h1>
+    <p class="page-hero__lead">The link may be old or mistyped. Here are the places people usually want.</p>
+    <div class="page-hero__actions page-hero__actions--center">
+      {{ cta("Go to the Home Page", "/", "404", "primary", "lg") }}
+      {{ cta("View Our Services", "/services", "404", "ghost", "lg") }}
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="links-title">
+  <div class="container narrow">
+    <h2 id="links-title">Popular pages</h2>
+    <ul class="link-list">
+      {% for service in services %}
+      <li><a class="text-link" href="/services/{{ service.slug }}">{{ service.name }}{{ icon("arrow") }}</a></li>
+      {% endfor %}
+      <li><a class="text-link" href="/free-consultation">Book a free consultation{{ icon("arrow") }}</a></li>
+      <li><a class="text-link" href="/about">About {{ site.name }}{{ icon("arrow") }}</a></li>
+      <li><a class="text-link" href="/contact">Contact us{{ icon("arrow") }}</a></li>
+    </ul>
+  </div>
+</section>
+
+{% endblock %}

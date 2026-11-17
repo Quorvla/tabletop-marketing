@@ -1,0 +1,223 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, cta, picture, checkList, faqList, ctaBand, profileCard %}
+
+{% block content %}
+
+{# ---------- Hero: what we do, who for, and the two main actions ---------- #}
+<section class="hero on-dark" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">Google Business Profile and websites for local businesses</p>
+      <h1 class="hero__title" id="hero-title"><span>Get found.</span> <span>Get seen.</span> <span>Get booked.</span></h1>
+      <p class="hero__lead">We fix your Google Business Profile and build simple websites, so nearby customers find you, trust you and get in touch. Fixed prices from $99. Done in days. No contracts.</p>
+      <div class="hero__actions">
+        {{ cta("Book a Free Consultation", "/free-consultation", "hero", "primary", "lg") }}
+        {{ cta("View Our Services", "/services", "hero", "ghost", "lg") }}
+      </div>
+      <ul class="hero__assurances">
+        <li>{{ icon("check") }}Free {{ site.consultation.minutes }}-minute call</li>
+        <li>{{ icon("check") }}No contracts</li>
+        <li>{{ icon("check") }}Serving {{ site.serviceArea.short }}</li>
+      </ul>
+    </div>
+    <div class="hero__visual">
+      {{ profileCard() }}
+    </div>
+  </div>
+</section>
+
+{# ---------- Our own numbers: promises about the service, not client results ---------- #}
+<section class="facts" aria-label="Quorvia at a glance">
+  <div class="container">
+    <dl class="facts__list">
+      {% for fact in proof.facts %}
+      <div class="fact">
+        <dt>{{ fact.label }}</dt>
+        <dd>{{ fact.value }}{% if fact.unit %}<span>{{ fact.unit }}</span>{% endif %}</dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+
+{# ---------- Who we help and the problems we solve ---------- #}
+<section class="section" aria-labelledby="problems-title">
+  <div class="container split">
+    <div class="split__media" data-reveal>
+      {{ picture("open-sign", "A fabric sign hanging in a shop window that reads: Yes, we’re open, with five stars underneath", 800, 1000, "(min-width: 960px) 520px, 92vw") }}
+    </div>
+    <div class="split__copy">
+      <p class="eyebrow">Who we help</p>
+      <h2 id="problems-title">You run a good business. Online, it does not look that way yet.</h2>
+      <p class="lead">People check Google before they visit, call or book. When what they find is out of date or half finished, it is easy for them to pick someone else. Quorvia is built for local businesses: restaurants, salons, studios, shops and trades.</p>
+      <ul class="problem-list">
+        <li>{{ icon("alert") }}<span>Wrong hours or an old phone number on your Google listing</span></li>
+        <li>{{ icon("alert") }}<span>A handful of old photos that do not show what you look like today</span></li>
+        <li>{{ icon("alert") }}<span>Reviews that nobody has answered</span></li>
+        <li>{{ icon("alert") }}<span>No website, or only a social media page</span></li>
+      </ul>
+      <a class="text-link" href="/services" data-cta="See how we fix it" data-cta-location="problems">See how we fix it{{ icon("arrow") }}</a>
+    </div>
+  </div>
+</section>
+
+{# ---------- Services overview ---------- #}
+<section class="section section--tint" id="services" aria-labelledby="services-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">What we do</p>
+      <h2 id="services-title">Two services. Fixed prices. No surprises.</h2>
+      <p class="lead">Pick the one you need, or both. Each is a one-time project with a clear scope and a clear price.</p>
+    </header>
+
+    <div class="service-grid">
+      {% for service in services %}
+      <article class="service-card" data-reveal>
+        <p class="service-card__kind">{{ service.kind }}</p>
+        <h3 class="service-card__name">{{ service.name }}</h3>
+        <p class="service-card__teaser">{{ service.teaser }}</p>
+        {{ checkList(service.highlights) }}
+        <div class="service-card__foot">
+          <p class="price">
+            <span class="price__amount">{{ service.price | money }}</span>
+            <span class="price__terms">{{ service.priceTerms }}<br>{{ service.turnaround }}.</span>
+          </p>
+          <a class="btn btn--outline" href="/services/{{ service.slug }}" data-cta="See what is included" data-cta-location="service card: {{ service.slug }}">See what is included<span class="visually-hidden"> in the {{ service.name }}</span></a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <p class="aside-note">Need something else? <a href="/contact">Tell us what you need</a> and we will follow up with a custom plan.</p>
+  </div>
+</section>
+
+{# ---------- Why choose us ---------- #}
+<section class="section" aria-labelledby="why-title">
+  <div class="container why">
+    <header class="why__head">
+      <p class="eyebrow">Why choose Quorvia</p>
+      <h2 id="why-title">Straightforward help from a small studio.</h2>
+      <p class="lead">No retainers, no jargon and no hand-offs. This is what working with us looks like.</p>
+      {{ cta("Book a Free Consultation", "/free-consultation", "why choose us") }}
+    </header>
+    <ol class="why__list">
+      <li data-reveal><h3>Prices you can see</h3><p>Every package has a fixed price, posted on this site. You know the cost before we ever talk.</p></li>
+      <li data-reveal><h3>Done in days</h3><p>A profile cleanup takes 2–3 business days. A one-page website takes about a week.</p></li>
+      <li data-reveal><h3>No contracts</h3><p>Each project is one-time. Nothing renews and nothing locks you in.</p></li>
+      <li data-reveal><h3>One person, start to finish</h3><p>You talk to a real person who actually does the work. No call centre and no account managers.</p></li>
+      <li data-reveal><h3>Fully remote</h3><p>No visit and no disruption. You send your details by text, email or Google Drive.</p></li>
+      <li data-reveal><h3>Honest about results</h3><p>We tell you what we will do and what we cannot promise. No guaranteed rankings and no fake reviews.</p></li>
+    </ol>
+  </div>
+</section>
+
+{# ---------- Statistics: third-party figures only, with the source named ---------- #}
+<section class="section section--dark on-dark stats" aria-labelledby="stats-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Why a complete profile matters</p>
+      <h2 id="stats-title">Google’s own numbers on complete Business Profiles.</h2>
+    </header>
+    <dl class="stat-grid">
+      {% for item in proof.research.items %}
+      <div class="stat" data-reveal>
+        <dt>{{ item.label }}</dt>
+        <dd>{{ item.value }}</dd>
+      </div>
+      {% endfor %}
+    </dl>
+    <p class="stats__source">Source: <a href="{{ proof.research.sourceUrl }}" target="_blank" rel="noopener noreferrer">{{ proof.research.sourceName }}, “{{ proof.research.sourceTitle }}”<span class="visually-hidden"> (opens in a new tab)</span></a>. These are Google’s figures about customers in general. They are not a promise of results for your business.</p>
+  </div>
+</section>
+
+{# ---------- How it works ---------- #}
+<section class="section" id="how-it-works" aria-labelledby="how-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2 id="how-title">From first call to finished in four steps.</h2>
+    </header>
+    <ol class="steps steps--4">
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">1</span>
+        <h3 class="step__title">Book a free consultation</h3>
+        <p>A {{ site.consultation.minutes }}-minute conversation about your business and what you want to fix. No obligation.</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">2</span>
+        <h3 class="step__title">Send us your details</h3>
+        <p>Your business info and up to 5 photos, by text, email or Google Drive. No visit needed.</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">3</span>
+        <h3 class="step__title">We do the work</h3>
+        <p>A profile cleanup takes 2–3 business days. A one-page website takes about a week.</p>
+      </li>
+      <li class="step" data-reveal>
+        <span class="step__num" aria-hidden="true">4</span>
+        <h3 class="step__title">You see the result</h3>
+        <p>For a profile cleanup, a short report on what was fixed and what comes next. For a website, your live link.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+{# ---------- Testimonials: shown only when there are real ones in content/proof.js ---------- #}
+{% if proof.testimonials | length %}
+<section class="section section--tint" aria-labelledby="testimonials-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Client testimonials</p>
+      <h2 id="testimonials-title">In our clients’ words.</h2>
+    </header>
+    <div class="quote-grid">
+      {% for item in proof.testimonials %}
+      <figure class="quote" data-reveal>
+        <blockquote><p>{{ item.quote }}</p></blockquote>
+        <figcaption><strong>{{ item.name }}</strong>{% if item.business %}<span>{{ item.business }}{% if item.location %}, {{ item.location }}{% endif %}</span>{% endif %}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# ---------- Portfolio: shown only when there is real client work in content/proof.js ---------- #}
+{% if proof.portfolio | length %}
+<section class="section" aria-labelledby="portfolio-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Recent work</p>
+      <h2 id="portfolio-title">Real projects for real businesses.</h2>
+    </header>
+    <div class="work-grid">
+      {% for item in proof.portfolio %}
+      <article class="work" data-reveal>
+        {% if item.image %}<img src="{{ asset(item.image) }}" alt="{{ item.imageAlt }}" width="800" height="500" loading="lazy" decoding="async">{% endif %}
+        <p class="service-card__kind">{{ item.kind }}</p>
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.summary }}</p>
+        {% if item.url %}<a class="text-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">Visit the site<span class="visually-hidden"> for {{ item.name }} (opens in a new tab)</span>{{ icon("arrow") }}</a>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# ---------- FAQ ---------- #}
+<section class="section section--tint" id="faq" aria-labelledby="faq-title">
+  <div class="container faq-layout">
+    <header class="section-head">
+      <p class="eyebrow">Questions</p>
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <p class="lead">Something we did not cover? <a href="/contact">Send us a message</a>.</p>
+    </header>
+    {{ faqList(faqs) }}
+  </div>
+</section>
+
+{{ ctaBand("home final cta") }}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "layouts/base.njk" %}
+{% from "partials/ui.njk" import icon, cta %}
+
+{% block content %}
+
+<section class="page-hero page-hero--center on-dark" aria-labelledby="page-title" data-thank-you>
+  <div class="container narrow">
+    <span class="thanks-badge" aria-hidden="true">{{ icon("check") }}</span>
+    <h1 id="page-title">Thank you. Your message is on its way.</h1>
+    <p class="page-hero__lead">We have it, and a real person will read it. Expect a reply within {{ site.replyTime }}.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="next-title">
+  <div class="container narrow">
+    <h2 id="next-title">What happens next</h2>
+    <ol class="next-steps">
+      <li><h3>We read your message</h3><p>Everything you wrote goes straight to the person who will do the work.</p></li>
+      <li><h3>We reply by email</h3><p>Usually within {{ site.replyTime }}. If you left a phone number and asked for a call, we may phone instead.</p></li>
+      <li><h3>We set up your free consultation</h3><p>If you asked for one, we agree a time that suits you. It takes {{ site.consultation.minutes }} minutes and there is no obligation.</p></li>
+    </ol>
+
+    <p class="aside-note">Did not get a reply? Check your spam folder first, then <a href="/contact">send us another message</a>{% if site.contact.phone %} or call <a href="{{ site.contact.phoneHref }}" data-contact="phone">{{ site.contact.phone }}</a>{% endif %}.</p>
+
+    <div class="thanks-links">
+      <h2>While you wait</h2>
+      <ul>
+        {% for service in services %}
+        <li><a class="text-link" href="/services/{{ service.slug }}">Read about the {{ service.name }}{{ icon("arrow") }}</a></li>
+        {% endfor %}
+        <li><a class="text-link" href="/#faq">Frequently asked questions{{ icon("arrow") }}</a></li>
+        <li><a class="text-link" href="/">Back to the home page{{ icon("arrow") }}</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
