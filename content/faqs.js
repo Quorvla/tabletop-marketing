@@ -6,15 +6,11 @@ const site = require('./site');
 module.exports = [
   {
     q: 'How much does it cost?',
-    a: 'The Online Presence Starter is $99 and a Simple Business Website is $275. Anything outside those two packages is quoted as a custom plan before any work starts.',
-  },
-  {
-    q: 'Do I have to sign a contract?',
-    a: 'No. You pay for the package and get the work, with no ongoing commitment.',
+    a: 'Website Design is $275, ad management starts at $200 a month, social media management starts at $100 a month, and a Google Business Profile cleanup is $99. Anything else is quoted as a custom plan before any work starts.',
   },
   {
     q: 'How long does it take?',
-    a: 'Most Google Business Profile projects are done in 2–3 business days from when we get your details and photos. A one-page website takes about a week.',
+    a: 'Most Google Business Profile projects are done in 2–3 business days from when we get your details and photos. A one-page website goes live in 7 business days or less.',
   },
   {
     q: 'What do you need from me?',
@@ -22,7 +18,7 @@ module.exports = [
   },
   {
     q: 'What is not included?',
-    a: 'Taking new photos, ongoing monthly management, social media content and ad management. Both packages are one-time projects, and we are happy to talk about more afterward.',
+    a: 'It depends on the package. Each one lists what is not included, and any add-ons, on our services and pricing page.',
   },
   {
     q: 'Can you guarantee I will rank first on Google?',

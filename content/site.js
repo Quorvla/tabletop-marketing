@@ -6,7 +6,7 @@ module.exports = {
   shortName: 'Quorvia',
   tagline: 'Get found. Get seen. Get booked.',
   description:
-    'Quorvia Marketing fixes Google Business Profiles and builds simple websites for local businesses. Fixed prices, done in days, no contracts.',
+    'Quorvia Marketing helps local businesses get more calls, leads and appointments with websites, ads, social media and Google Business Profile cleanups.',
 
   language: 'en-CA',
   currency: 'CAD',

@@ -7,16 +7,33 @@
 // - Only describe what is really offered. No invented extras.
 // - "outcomes" says what a client can expect and never promises rankings, calls or sales.
 
-module.exports = [
+const services = [
   {
     slug: 'google-business-profile',
     name: 'Online Presence Starter',
     kind: 'Google Business Profile cleanup',
     illustration: 'profile',
     price: 99,
+    priceUnit: 'one-time',
     priceTerms: 'One-time. Paid upfront.',
     turnaround: '2–3 business days',
     updated: '2026-11-15',
+
+    card: {
+      name: 'Google Profile Cleanup',
+      description: 'A one-time cleanup of your Google Business Profile, so what people see on Google Search and Maps is accurate, complete and active.',
+      included: [
+        'Hours, categories, menu or website link and description fixed',
+        'Up to 5 photos added (you send them by text, email or Drive)',
+        'Professional replies to up to 5 recent reviews',
+        'One Google Post published',
+        'A short follow-up report on what was fixed and what is next',
+        'Done remotely in 2–3 business days',
+      ],
+      notIncluded: 'Taking new photos, ongoing monthly management, social content, ad management.',
+      bestFor: 'Businesses whose Google listing is out of date, incomplete or ignored.',
+      button: 'Fix My Google Profile',
+    },
 
     teaser:
       'A one-time cleanup of your Google Business Profile, so the listing people see on Google Search and Maps is accurate, complete and active.',
@@ -152,87 +169,121 @@ module.exports = [
 
   {
     slug: 'website-design',
-    name: 'Simple Business Website',
-    kind: 'One-page website design',
+    name: 'Website Design',
+    kind: 'One-page website',
     illustration: 'browser',
     price: 275,
+    priceUnit: 'one-time',
     priceTerms: 'One-time.',
-    turnaround: 'About a week',
-    updated: '2026-11-15',
+    turnaround: '7 business days or less',
+    updated: '2026-11-21',
 
-    teaser:
-      'A clean one-page website with your hours, your menu or services, your photos, your contact details and a map. Built and launched in about a week.',
+    card: {
+      description: 'A clean, professional website that turns visitors into calls and bookings.',
+      included: [
+        'One-page, mobile-friendly website (Home, Services, About, Reviews, Contact sections)',
+        'Click-to-call button, contact form and Google Map',
+        'Business hours, service list and photos',
+        'Basic local SEO setup',
+        'Connected to your Google Business Profile',
+        '1 round of revisions',
+        'Live in 7 business days or less',
+      ],
+      notIncluded: 'Extra pages ($50/page), copywriting beyond light edits, online booking or ordering systems, domain name.',
+      addOn: 'Optional care plan: $25/mo for hosting, updates, backups and small edits.',
+      bestFor: 'Businesses with no website, or an outdated one that doesn’t bring in calls.',
+      button: 'Get My Website',
+    },
+
+    teaser: 'A clean, professional website that turns visitors into calls and bookings.',
     highlights: [
-      'One clean page that reads well on a phone',
-      'Your hours, menu or services, and photos',
-      'Contact details and an embedded map',
-      'Built and launched in about a week',
+      'One-page, mobile-friendly website',
+      'Click-to-call button, contact form and Google Map',
+      'Basic local SEO, connected to your Google Business Profile',
+      'Live in 7 business days or less',
     ],
 
     seo: {
       title: 'One-Page Website Design for Small Business, $275 | Quorvia',
       description:
-        'A simple one-page website for your local business for $275. Your hours, services, photos, contact details and a map, built and launched in about a week.',
+        'A one-page, mobile-friendly website for your local business for $275, with click-to-call, a contact form, a map and basic local SEO. Live in 7 business days or less.',
     },
 
     hero: {
-      heading: 'A simple one-page website for your business',
+      heading: 'A one-page website for your business',
       lead:
-        'Everything a customer wants to know on one clean page: when you are open, what you offer, what it looks like, how to reach you and where to find you. Built and launched in about a week.',
+        'A clean, professional website that turns visitors into calls and bookings: your services, hours, photos, reviews and contact details on one page. Live in 7 business days or less.',
     },
 
     whatItIs: [
-      'A one-page website is a single, scrollable page that answers the questions customers ask most. When are you open? What do you offer? What does it look like? How do I reach you?',
-      'We design and build yours, add your contact details and a map, and launch it in about a week. It gives your Google listing, your social profiles and your printed materials one professional place to point to.',
+      'A one-page website is a single, scrollable page that answers the questions customers ask most. What do you offer? When are you open? What do other customers say? How do I reach you?',
+      'We design and build yours with Home, Services, About, Reviews and Contact sections, add a click-to-call button, a contact form and a Google Map, and connect it to your Google Business Profile. It goes live in 7 business days or less.',
     ],
 
     problems: [
       'You have no website, so people who look you up find nothing of yours to click.',
       'Your only online home is a social media page.',
       'The website button on your Google listing is empty.',
-      'Your current site is out of date or hard to read on a phone.',
+      'Your current site is out of date, hard to read on a phone, or does not bring in calls.',
     ],
 
     included: [
       {
-        title: 'A single-page website',
-        text: 'Your business hours, your menu or services and your photos on one clean page that reads well on a phone.',
+        title: 'A one-page, mobile-friendly website',
+        text: 'Home, Services, About, Reviews and Contact sections on one page that reads well on any phone.',
       },
       {
-        title: 'Contact info and a map',
-        text: 'Your phone number, your address and an embedded map, so customers can reach you and find you.',
+        title: 'Click-to-call, a contact form and a map',
+        text: 'A click-to-call button, a contact form and a Google Map, so customers can reach you and find you.',
       },
       {
-        title: 'Built and launched in about a week',
+        title: 'Your hours, services and photos',
+        text: 'Your business hours, your service list and your photos.',
+      },
+      {
+        title: 'Basic local SEO setup',
+        text: 'The basics that help search engines understand what you do and where, and a link to your Google Business Profile.',
+      },
+      {
+        title: '1 round of revisions',
+        text: 'You see the site before it goes live, and we make one round of changes.',
+      },
+      {
+        title: 'Live in 7 business days or less',
         text: 'We handle the build from the first draft to the day it goes live.',
       },
     ],
-    notIncluded: ['Extra pages', 'Online ordering, booking or payment systems', 'Taking new photos'],
-    notIncludedNote: 'Need one of these? Tell us and we will follow up with a custom plan.',
+    notIncluded: [
+      'Extra pages ($50/page)',
+      'Copywriting beyond light edits',
+      'Online booking or ordering systems',
+      'Domain name',
+    ],
+    notIncludedNote: 'Optional care plan: $25/mo for hosting, updates, backups and small edits.',
 
     steps: [
       {
         title: 'Tell us about your business',
-        text: 'Share your hours, your menu or services, your photos and your contact details.',
+        text: 'Share your services, hours, photos, reviews and contact details.',
       },
       {
         title: 'We design and build it',
-        text: 'We put together your one-page site, with your contact info and a map.',
+        text: 'We put together your one-page site, with click-to-call, a contact form and a map.',
       },
       {
         title: 'You take a look',
-        text: 'You see the site before it goes live, so anything that is off can be fixed first.',
+        text: 'You see the site before it goes live, and we make one round of revisions.',
       },
       {
         title: 'We launch it',
-        text: 'Your site goes live, about a week after we have your details.',
+        text: 'Your site goes live in 7 business days or less.',
       },
     ],
 
     benefits: [
       {
-        title: 'One place for the basics',
-        text: 'Hours, services, photos and contact details in one spot, instead of scattered across social posts.',
+        title: 'Built to bring in calls',
+        text: 'A click-to-call button and a contact form on every phone, so interested visitors can reach you right away.',
       },
       {
         title: 'Somewhere to send people',
@@ -244,15 +295,15 @@ module.exports = [
       },
       {
         title: 'Fast and simple',
-        text: 'One page, one price, live in about a week.',
+        text: 'One page, one price, live in 7 business days or less.',
       },
     ],
 
     outcomes: {
       expect: [
-        'A live one-page website in about a week.',
-        'Your hours, services, photos, contact details and a map, all in one place.',
-        'A link you can add to your Google listing and social profiles.',
+        'A live one-page website in 7 business days or less.',
+        'Your services, hours, photos, reviews, contact details and a map, all in one place.',
+        'A website you own, connected to your Google Business Profile.',
       ],
       cannot:
         'A website on its own does not guarantee more customers or a particular position on Google. It gives people who are already looking for you a clear, professional place to land.',
@@ -261,20 +312,105 @@ module.exports = [
     faqs: [
       {
         q: 'What do you need from me?',
-        a: 'Your business hours, your menu or list of services, the photos you want to use and your contact details. We go through it together on your free consultation.',
+        a: 'Your business hours, your list of services, the photos you want to use and your contact details. We go through it together on your free consultation.',
       },
       {
         q: 'Can I have more than one page?',
-        a: 'This package is a single page. If you need more, tell us what you have in mind and we will follow up with a custom plan.',
+        a: 'Yes. Extra pages are $50 each.',
       },
       {
-        q: 'What about a domain name and hosting?',
-        a: 'We walk you through the options on your free consultation, before you commit to anything.',
+        q: 'Is the domain name included?',
+        a: 'No. The domain name is not included in the $275.',
       },
       {
-        q: 'Will it work on phones?',
-        a: 'Yes. The page is designed to read well on phones, tablets and computers.',
+        q: 'Who looks after the site once it is live?',
+        a: 'You can, or you can add the optional care plan: $25 a month for hosting, updates, backups and small edits.',
+      },
+      {
+        q: 'Who owns the website?',
+        a: 'You do. You own your website, accounts and content.',
       },
     ],
   },
+
+  {
+    slug: 'ad-management',
+    name: 'Ad Management',
+    kind: 'Facebook, Instagram or Google ads',
+    page: false,
+    price: 200,
+    pricePrefix: 'Starting at',
+    priceUnit: '/month',
+    priceTerms: 'Starting at, per month.',
+
+    card: {
+      description: 'Targeted ads that put your business in front of local customers ready to buy.',
+      included: [
+        'Setup of one ad platform (Facebook/Instagram or Google)',
+        '1 campaign with up to 3 ad variations',
+        'Local targeting by location, age and interests',
+        'Ad copy and graphics created for you',
+        'Weekly performance checks and adjustments',
+        'Monthly report showing calls, messages, clicks and cost per lead',
+      ],
+      notIncluded: 'Ad spend, paid directly to Google or Meta (we recommend $150-300/month to start).',
+      addOn: 'Second platform +$100/month. 3-month minimum.',
+      bestFor: 'Businesses that want more calls and bookings quickly.',
+      button: 'Start Getting Leads',
+    },
+
+    teaser: 'Targeted ads that put your business in front of local customers ready to buy.',
+    highlights: [
+      'One ad platform set up: Facebook/Instagram or Google',
+      'Ad copy and graphics created for you',
+      'Weekly performance checks and adjustments',
+      'Monthly report on calls, messages, clicks and cost per lead',
+    ],
+  },
+
+  {
+    slug: 'social-media',
+    name: 'Social Media Management',
+    kind: 'Facebook or Instagram',
+    page: false,
+    price: 100,
+    pricePrefix: 'Starting at',
+    priceUnit: '/month',
+    priceTerms: 'Starting at, per month.',
+
+    card: {
+      description: 'A consistent, professional presence so customers trust you before they call.',
+      included: [
+        '1 platform (Facebook or Instagram)',
+        '6 branded posts per month',
+        'Captions and hashtags written for you',
+        'Posts scheduled in advance with monthly calendar approval',
+        'Profile cleanup (bio, links, contact buttons)',
+        'Monthly reach and engagement summary',
+      ],
+      notIncluded: 'Photo shoots, video/Reels, daily comment replies.',
+      addOn: 'Second platform +$75/month. You send photos monthly; we design the posts.',
+      bestFor: 'Businesses that post rarely or not at all.',
+      button: 'Grow My Socials',
+    },
+
+    teaser: 'A consistent, professional presence so customers trust you before they call.',
+    highlights: [
+      '1 platform: Facebook or Instagram',
+      '6 branded posts per month',
+      'Captions and hashtags written for you',
+      'Monthly reach and engagement summary',
+    ],
+  },
 ];
+
+// Pricing-page order: the three main services first, the Google profile cleanup as the fourth card.
+const ORDER = ['website-design', 'ad-management', 'social-media', 'google-business-profile'];
+services.sort((a, b) => ORDER.indexOf(a.slug) - ORDER.indexOf(b.slug));
+
+for (const service of services) {
+  service.hasPage = service.page !== false;
+  service.url = service.hasPage ? `/services/${service.slug}` : `/services#${service.slug}`;
+}
+
+module.exports = services;

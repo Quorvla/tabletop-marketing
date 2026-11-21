@@ -137,6 +137,7 @@ main:focus { outline: none; }
 
 .icon { width: 1.25em; height: 1.25em; flex: none; }
 .nowrap { white-space: nowrap; }
+.split-phrases span { display: inline-block; }
 
 .visually-hidden {
   position: absolute;
@@ -796,9 +797,10 @@ main:focus { outline: none; }
 .service-grid:has(.service-card--wide:only-child) { grid-template-columns: 1fr; }
 .service-card--wide { gap: 0.5rem; }
 
-.price { display: flex; align-items: center; gap: 0.9rem; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.4rem; }
+.price__prefix { flex-basis: 100%; color: var(--muted); font-size: 0.875rem; font-weight: 600; }
+.price__unit { color: var(--muted); font-size: 0.875rem; line-height: 1.4; }
 .price__amount { color: var(--navy-800); font-family: var(--font-display); font-size: clamp(2.4rem, 2vw + 1.8rem, 3.2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
-.price__terms { color: var(--muted); font-size: 0.875rem; line-height: 1.4; }
 
 /* ---------- Why choose us / principles ---------- */
 .why { display: grid; gap: clamp(2.5rem, 6vw, 5rem); }
@@ -1072,41 +1074,60 @@ main:focus { outline: none; }
 .price-card__facts li { display: flex; align-items: center; gap: 0.7rem; }
 .price-card__facts .icon { color: var(--teal-700); }
 
-/* ---------- Services overview page ---------- */
-.offer { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
-.offer .check-list { margin-top: 1.75rem; }
-.offer__facts { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; margin: 2rem 0 0; padding-top: 1.5rem; border-top: 1px solid #C3D0D8; }
-.offer__facts dt { color: var(--muted); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
-.offer__facts dd { margin: 0.2rem 0 0; color: var(--navy-800); font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
-.offer__actions { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2rem; }
-.offer__visual { padding: clamp(1.5rem, 4vw, 3rem) clamp(0.5rem, 3vw, 2.5rem) clamp(2.25rem, 4vw, 3rem); border-radius: var(--r-lg); background: linear-gradient(160deg, var(--navy-900), var(--navy-800)); }
-@media (min-width: 60rem) {
-  .offer { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
-  .offer--flip .offer__visual { order: 2; }
+/* ---------- Services & Pricing page ---------- */
+.plan-grid { display: grid; gap: 1.25rem; align-items: stretch; }
+@media (min-width: 48rem) {
+  .plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+@media (min-width: 75rem) {
+  .plan-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 2.5vw, 1.85rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.plan:hover { transform: translateY(-4px); border-color: var(--mint-400); box-shadow: var(--shadow-lg); }
+.plan__name { font-size: clamp(1.35rem, 0.6vw + 1.2rem, 1.6rem); }
+.plan__price { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.4rem; margin-top: 0.9rem; }
+.plan__price__prefix { flex-basis: 100%; color: var(--muted); font-size: 0.875rem; font-weight: 600; }
+.plan__price__amount { color: var(--navy-800); font-family: var(--font-display); font-size: clamp(2.6rem, 1.5vw + 2.1rem, 3.1rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.plan__price__unit { color: var(--muted); font-size: 0.95rem; font-weight: 500; }
+.plan__desc { margin-top: 0.9rem; color: var(--ink-2); }
+.plan .check-list { margin-top: 1.4rem; padding-top: 1.4rem; border-top: 1px solid var(--line); gap: 0.6rem; font-size: 0.95rem; line-height: 1.5; }
+.plan .check-list__icon { margin-top: 0.05rem; }
+.plan__note { margin-top: 1.4rem; padding: 0.85rem 1rem; border-radius: var(--r-sm); background: var(--paper); color: var(--ink-2); font-size: 0.85rem; line-height: 1.5; }
+.plan__note-title { margin-bottom: 0.2rem; color: var(--ink); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.plan__best { margin-top: 1rem; color: var(--ink-2); font-size: 0.925rem; }
+.plan__best strong { color: var(--ink); }
+.plan__more { margin-top: 0.5rem; font-size: 0.95rem; }
+.plan__actions { margin-top: auto; padding-top: 1.5rem; }
+.plan__actions .btn { width: 100%; }
 
-.choose-grid { display: grid; gap: 1.5rem; }
-@media (min-width: 52rem) {
-  .choose-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.bundle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.6rem, 3.5vw, 2.4rem) clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(30rem 14rem at 100% 0%, rgba(62, 205, 191, 0.28), transparent 70%),
+    var(--navy-900);
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
 }
-.choose { padding: clamp(1.5rem, 2.5vw, 2rem); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--white); box-shadow: var(--shadow-sm); }
-.choose__icon { width: 2.75rem; height: 2.75rem; margin-bottom: 1.25rem; padding: 0.65rem; border-radius: 0.85rem; background: var(--mint-100); color: var(--teal-700); }
-.choose p { margin-top: 0.6rem; color: var(--ink-2); }
-.choose .text-link { margin-top: 1.25rem; }
+.bundle__text { max-width: 36rem; font-family: var(--font-display); font-size: clamp(1.45rem, 1.4vw + 1.1rem, 2.1rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
 
-.photo-band { position: relative; margin-top: clamp(2.5rem, 5vw, 4rem); overflow: hidden; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
-.photo-band img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; }
-.photo-band p { padding: 1.5rem; background: var(--navy-900); color: var(--white); font-family: var(--font-display); font-size: clamp(1.2rem, 1vw + 1rem, 1.6rem); font-weight: 500; line-height: 1.35; }
-@media (min-width: 52rem) {
-  .photo-band img { aspect-ratio: 5 / 2; }
-  .photo-band p {
-    position: absolute;
-    inset: auto 0 0 0;
-    padding: 5rem clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
-    background: linear-gradient(180deg, transparent, rgba(7, 28, 41, 0.92) 62%);
-  }
-  .photo-band p::before { content: ""; display: block; max-width: 44rem; }
-}
+.terms-note { display: flex; gap: 0.75rem; align-items: flex-start; max-width: 52rem; margin: clamp(1.75rem, 3vw, 2.5rem) auto 0; color: var(--ink-2); font-size: 0.95rem; }
+.terms-note .icon { margin-top: 0.15rem; color: var(--teal-700); }
 
 /* ---------- Service detail page ---------- */
 .included { display: grid; gap: 2rem; }

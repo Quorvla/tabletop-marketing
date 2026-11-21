@@ -63,6 +63,6 @@ test('the stored record says what kind of request it was', () => {
   assert.equal(record.restaurant, 'Cafe');
   assert.equal(record.status, 'New Lead');
   assert.match(record.message, /Free consultation request/);
-  assert.match(record.message, /Simple Business Website/);
+  assert.match(record.message, /Website Design/);
   assert.match(record.message, /Mornings/);
 });

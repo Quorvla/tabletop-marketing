@@ -40,6 +40,15 @@
 </picture>
 {%- endmacro %}
 
+{# A service price, e.g. "$275 one-time" or "Starting at $200 /month". #}
+{% macro planPrice(service, cls="price") -%}
+<p class="{{ cls }}">
+  {% if service.pricePrefix %}<span class="{{ cls }}__prefix">{{ service.pricePrefix }}</span>{% endif %}
+  <span class="{{ cls }}__amount">{{ service.price | money }}</span>
+  <span class="{{ cls }}__unit">{{ service.priceUnit }}</span>
+</p>
+{%- endmacro %}
+
 {% macro breadcrumbs(trail) -%}
 {% if trail | length > 1 %}
 <nav class="breadcrumbs" aria-label="Breadcrumb">

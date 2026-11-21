@@ -1,5 +1,5 @@
 {% extends "layouts/base.njk" %}
-{% from "partials/ui.njk" import icon, cta, picture, breadcrumbs, ctaBand %}
+{% from "partials/ui.njk" import icon, cta, picture, breadcrumbs, ctaBand, planPrice %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
     {{ breadcrumbs(page.trail) }}
     <p class="eyebrow">About {{ site.name }}</p>
     <h1 id="page-title">We make local businesses easy to find and easy to choose.</h1>
-    <p class="page-hero__lead">{{ site.name }} is a small, fully remote studio that does two things well: cleaning up Google Business Profiles and building simple websites. Fixed prices, short timelines and no contracts.</p>
+    <p class="page-hero__lead">{{ site.name }} is a small, fully remote studio that helps local businesses get found: websites, ads, social media and Google Business Profile cleanups. Clear prices and short timelines.</p>
   </div>
 </section>
 
@@ -18,8 +18,8 @@
     <div class="split__copy">
       <p class="eyebrow">Who we are</p>
       <h2 id="intro-title">Small on purpose.</h2>
-      <p class="lead">Most local businesses are very good at what they do and far too busy to manage how they look online. The usual answer is a monthly retainer with an agency, which many small shops do not need and cannot justify.</p>
-      <p class="lead">Quorvia exists for the gap in between. We handle the basics that decide whether a nearby customer finds you and trusts what they see, and we do it as a one-time project with a price you can read on this site.</p>
+      <p class="lead">Most local businesses are very good at what they do and far too busy to manage how they look online.</p>
+      <p class="lead">Quorvia handles what decides whether a nearby customer finds you and trusts what they see, with a clear scope and a price you can read on this site.</p>
       <ul class="pill-list">
         <li>{{ icon("pin") }}<span>Serving {{ site.serviceArea.label }}</span></li>
         <li>{{ icon("laptop") }}<span>Fully remote</span></li>
@@ -49,12 +49,12 @@
       <li class="step" data-reveal>
         <span class="step__num" aria-hidden="true">2</span>
         <h3 class="step__title">We agree the scope</h3>
-        <p>A fixed package at a fixed price, or a custom plan quoted before any work starts.</p>
+        <p>A package from our pricing page, or a custom plan quoted before any work starts.</p>
       </li>
       <li class="step" data-reveal>
         <span class="step__num" aria-hidden="true">3</span>
         <h3 class="step__title">We do the work</h3>
-        <p>Remotely and quickly: 2–3 business days for a profile cleanup, about a week for a website.</p>
+        <p>Remotely and quickly: 2–3 business days for a profile cleanup, 7 business days or less for a website.</p>
       </li>
       <li class="step" data-reveal>
         <span class="step__num" aria-hidden="true">4</span>
@@ -74,7 +74,7 @@
       <p class="lead">Being clear about these up front saves everyone time.</p>
     </header>
     <ol class="why__list">
-      <li data-reveal><h3>We will not lock you into a contract</h3><p>Every project is one-time. If you want more help later, that is your call.</p></li>
+      <li data-reveal><h3>We will not keep what is yours</h3><p>You own your website, accounts and content.</p></li>
       <li data-reveal><h3>We will not promise rankings</h3><p>Google decides where listings appear. We promise the work, and we are honest about what it can and cannot do.</p></li>
       <li data-reveal><h3>We will not post fake reviews</h3><p>We write replies to the real reviews you already have. Nothing invented, ever.</p></li>
       <li data-reveal><h3>We will not hide the price</h3><p>Package prices are on this site. Anything custom is quoted before work begins.</p></li>
@@ -97,7 +97,7 @@
   <div class="container">
     <header class="section-head">
       <p class="eyebrow">What we offer</p>
-      <h2 id="offer-title">Two services, both fixed price.</h2>
+      <h2 id="offer-title">Four services, clear prices.</h2>
     </header>
     <div class="service-grid">
       {% for service in services %}
@@ -108,11 +108,8 @@
           <p class="service-card__teaser">{{ service.teaser }}</p>
         </div>
         <div class="service-card__foot">
-          <p class="price">
-            <span class="price__amount">{{ service.price | money }}</span>
-            <span class="price__terms">{{ service.priceTerms }}<br>{{ service.turnaround }}.</span>
-          </p>
-          <a class="btn btn--outline" href="/services/{{ service.slug }}" data-cta="See what is included" data-cta-location="about: {{ service.slug }}">See what is included<span class="visually-hidden"> in the {{ service.name }}</span></a>
+          {{ planPrice(service) }}
+          <a class="btn btn--outline" href="{{ service.url }}" data-cta="See what is included" data-cta-location="about: {{ service.slug }}">See what is included<span class="visually-hidden"> in the {{ service.name }}</span></a>
         </div>
       </article>
       {% endfor %}

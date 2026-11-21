@@ -1,5 +1,5 @@
 {% extends "layouts/base.njk" %}
-{% from "partials/ui.njk" import icon, cta, checkList, faqList, steps, breadcrumbs, ctaBand, profileCard, browserMock %}
+{% from "partials/ui.njk" import icon, cta, checkList, faqList, steps, breadcrumbs, ctaBand, profileCard, browserMock, planPrice %}
 
 {% block content %}
 
@@ -23,7 +23,7 @@
       <ul class="price-card__facts">
         <li>{{ icon("clock") }}<span>{{ service.turnaround }}</span></li>
         <li>{{ icon("laptop") }}<span>Fully remote</span></li>
-        <li>{{ icon("shield") }}<span>No contract</span></li>
+        <li>{{ icon("shield") }}<span>You own the result</span></li>
       </ul>
     </aside>
   </div>
@@ -158,11 +158,8 @@
           <p class="service-card__teaser">{{ other.teaser }}</p>
         </div>
         <div class="service-card__foot">
-          <p class="price">
-            <span class="price__amount">{{ other.price | money }}</span>
-            <span class="price__terms">{{ other.priceTerms }}<br>{{ other.turnaround }}.</span>
-          </p>
-          <a class="btn btn--outline" href="/services/{{ other.slug }}" data-cta="See what is included" data-cta-location="cross-sell: {{ other.slug }}">See what is included<span class="visually-hidden"> in the {{ other.name }}</span></a>
+          {{ planPrice(other) }}
+          <a class="btn btn--outline" href="{{ other.url }}" data-cta="See what is included" data-cta-location="cross-sell: {{ other.slug }}">See what is included<span class="visually-hidden"> in the {{ other.name }}</span></a>
         </div>
       </article>
       {% endfor %}

@@ -11,7 +11,7 @@ module.exports = {
   facts: [
     { value: '$99', label: 'Flat price for a Google profile cleanup' },
     { value: '2–3', unit: 'days', label: 'Business days from details to done' },
-    { value: '$0', label: 'Monthly fees or contracts' },
+    { value: '7', unit: 'days', label: 'Business days or less to launch a website' },
     { value: '24–48', unit: 'hrs', label: 'Business hours to hear back from us' },
   ],
 

@@ -26,7 +26,7 @@
       <h2>While you wait</h2>
       <ul>
         {% for service in services %}
-        <li><a class="text-link" href="/services/{{ service.slug }}">Read about the {{ service.name }}{{ icon("arrow") }}</a></li>
+        <li><a class="text-link" href="{{ service.url }}">Read about the {{ service.name }}{{ icon("arrow") }}</a></li>
         {% endfor %}
         <li><a class="text-link" href="/#faq">Frequently asked questions{{ icon("arrow") }}</a></li>
         <li><a class="text-link" href="/">Back to the home page{{ icon("arrow") }}</a></li>

@@ -1,5 +1,5 @@
 {% extends "layouts/base.njk" %}
-{% from "partials/ui.njk" import icon, cta, picture, checkList, breadcrumbs, ctaBand, profileCard, browserMock %}
+{% from "partials/ui.njk" import icon, planPrice, checkList, breadcrumbs %}
 
 {% block content %}
 
@@ -7,69 +7,49 @@
   <div class="container">
     {{ breadcrumbs(page.trail) }}
     <p class="eyebrow">Services and pricing</p>
-    <h1 id="page-title">Fixed-price help for getting found locally</h1>
-    <p class="page-hero__lead">Two one-time services, each with a clear scope and a price you can see up front. No retainers and no contracts.</p>
+    <h1 id="page-title" class="split-phrases">{% for phrase in pricing.hero.heading.split(". ") %}<span>{{ phrase }}{% if not loop.last %}.{% endif %}</span> {% endfor %}</h1>
+    <p class="page-hero__lead">{{ pricing.hero.lead }}</p>
   </div>
 </section>
 
-{% for service in services %}
-<section class="section{% if loop.index is even %} section--tint{% endif %}" id="{{ service.slug }}" aria-labelledby="{{ service.slug }}-title">
-  <div class="container offer{% if loop.index is even %} offer--flip{% endif %}">
-    <div class="offer__visual" data-reveal>
-      {% if service.illustration == "profile" %}{{ profileCard(false) }}{% else %}{{ browserMock() }}{% endif %}
-    </div>
-    <div class="offer__copy">
-      <p class="eyebrow">{{ service.kind }}</p>
-      <h2 id="{{ service.slug }}-title">{{ service.name }}</h2>
-      <p class="lead">{{ service.teaser }}</p>
-      {{ checkList(service.highlights) }}
-      <dl class="offer__facts">
-        <div><dt>Price</dt><dd>{{ service.price | money }}</dd></div>
-        <div><dt>Timeline</dt><dd>{{ service.turnaround }}</dd></div>
-        <div><dt>Commitment</dt><dd>One-time</dd></div>
-      </dl>
-      <div class="offer__actions">
-        <a class="btn btn--primary" href="/services/{{ service.slug }}" data-cta="See full details" data-cta-location="services: {{ service.slug }}">See full details<span class="visually-hidden"> of the {{ service.name }}</span></a>
-        <a class="btn btn--outline" href="/free-consultation?service={{ service.slug }}" data-cta="Book a Free Consultation" data-cta-location="services: {{ service.slug }}">Book a Free Consultation</a>
-      </div>
-    </div>
-  </div>
-</section>
-{% endfor %}
-
-<section class="section" aria-labelledby="choose-title">
+<section class="section section--tint" aria-labelledby="plans-title">
   <div class="container">
-    <header class="section-head">
-      <p class="eyebrow">Not sure which one you need?</p>
-      <h2 id="choose-title">A quick way to choose.</h2>
-    </header>
-    <div class="choose-grid">
-      <article class="choose" data-reveal>
-        {{ icon("pin", "choose__icon") }}
-        <h3>Start with your Google profile if&hellip;</h3>
-        <p>People can already find you on Google, but what they see is wrong, thin or out of date.</p>
-        <a class="text-link" href="/services/google-business-profile">About the Online Presence Starter{{ icon("arrow") }}</a>
+    <h2 class="visually-hidden" id="plans-title">Packages and prices</h2>
+
+    <div class="plan-grid">
+      {% for service in services %}
+      {% set card = service.card %}
+      <article class="plan" id="{{ service.slug }}" aria-labelledby="{{ service.slug }}-name">
+        <h3 class="plan__name" id="{{ service.slug }}-name">{{ card.name or service.name }}</h3>
+        {{ planPrice(service, "plan__price") }}
+        <p class="plan__desc">{{ card.description }}</p>
+
+        {{ checkList(card.included, "plan__list") }}
+
+        <div class="plan__note">
+          <p class="plan__note-title">Not included / add-ons</p>
+          <p>{{ card.notIncluded }}{% if card.addOn %} {{ card.addOn }}{% endif %}</p>
+        </div>
+
+        <p class="plan__best"><strong>Best for:</strong> {{ card.bestFor }}</p>
+        {% if service.hasPage %}
+        <a class="text-link plan__more" href="{{ service.url }}">Full details<span class="visually-hidden"> about {{ card.name or service.name }}</span>{{ icon("arrow") }}</a>
+        {% endif %}
+
+        <div class="plan__actions">
+          <a class="btn btn--primary" href="/free-consultation?service={{ service.slug }}" data-cta="{{ card.button }}" data-cta-location="pricing card: {{ service.slug }}">{{ card.button }}</a>
+        </div>
       </article>
-      <article class="choose" data-reveal>
-        {{ icon("globe", "choose__icon") }}
-        <h3>Start with a website if&hellip;</h3>
-        <p>You have nowhere of your own to send people who want to know more about you.</p>
-        <a class="text-link" href="/services/website-design">About the Simple Business Website{{ icon("arrow") }}</a>
-      </article>
-      <article class="choose" data-reveal>
-        {{ icon("chat", "choose__icon") }}
-        <h3>Need something else?</h3>
-        <p>Tell us what you need and we will follow up with a custom plan.</p>
-        <a class="text-link" href="/contact">Send us a message{{ icon("arrow") }}</a>
-      </article>
+      {% endfor %}
     </div>
-    <div class="photo-band" data-reveal>
-      {{ picture("open-door", "A glass shop door with a hanging sign that reads: Yes, we are open", 1200, 600, "(min-width: 1180px) 1100px, 92vw") }}
-      <p>The two services work well together: an accurate Google profile helps people find you, and a simple website gives them somewhere to land.</p>
-    </div>
+
+    <aside class="bundle" aria-label="Bundle offer">
+      <p class="bundle__text">{{ pricing.bundle.text }}</p>
+      <a class="btn btn--primary btn--lg" href="/free-consultation?service={{ pricing.bundle.service }}" data-cta="{{ pricing.bundle.button }}" data-cta-location="pricing bundle">{{ pricing.bundle.button }}</a>
+    </aside>
+
+    <p class="terms-note">{{ icon("shield") }}<span>{{ pricing.termsNote }}</span></p>
   </div>
 </section>
-
-{{ ctaBand("services final cta", "Not sure where to start?", "Book a free " ~ site.consultation.minutes ~ "-minute consultation and we will point you to the right service, or tell you honestly if you do not need one.") }}
 
 {% endblock %}
